@@ -1,0 +1,69 @@
+{
+  "extName": {
+    "message": "Papago for Firefox"
+  },
+
+  "extDescription": {
+    "message": "An extension that utilizes Naver's Papago translation engine."
+  },
+
+	"auto": {
+		"message": "Auto"
+	},
+
+  "en": {
+		"message": "English"
+	},
+
+	"ko": {
+		"message": "Korean"
+	},
+
+	"ja": {
+		"message": "Japanese"
+	},
+
+	"zh_cn": {
+		"message": "Chinese (Simplified)"
+	},
+
+	"zh_tw": {
+		"message": "Chinese (Traditional)"
+	},
+
+  "vi": {
+		"message": "Vietnamese"
+	},
+
+  "id": {
+		"message": "Indonesian"
+	},
+
+  "th": {
+		"message": "Thai"
+	},
+
+  "de": {
+		"message": "German"
+	},
+
+  "ru": {
+		"message": "Russian"
+	},
+
+  "es": {
+		"message": "Spanish"
+	},
+
+  "it": {
+		"message": "Italian"
+	},
+
+	"fr": {
+		"message": "French"
+	},
+
+	"detected": {
+		"message": "Detected"
+	}
+}

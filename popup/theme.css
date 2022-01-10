@@ -1,0 +1,10 @@
+@media (prefers-color-scheme: light) {
+  body{
+      background-color: white !important;
+      color: black !important;
+  }
+
+  /* button, select, textarea*/
+  /* bordered */
+  /* result-text */
+}

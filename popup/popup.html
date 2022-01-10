@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papago Translator Extension</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="theme.css">
+    <script src="popup.js"></script>
+</head>
+<body>
+    <div class="container" id="blur">
+        <div class="flex" id="toolbar-top">
+            <select name="source" class="bordered" id="language-source">
+                <option value="auto">Auto</option>
+                <option value="en">English</option>
+                <option value="ko">Korean</option>
+                <option value="ja">Japanese</option>
+                <option value="zh-CN">Chinese (Simplified)</option>
+                <option value="zh-TW">Chinese (Traditional)</option>
+                <option value="vi">Vietnamese</option>
+                <option value="id">Indonesian</option>
+                <option value="th">Thai</option>
+                <option value="de">German</option>
+                <option value="ru">Russian</option>
+                <option value="es">Spanish</option>
+                <option value="it">Italian</option>
+                <option value="fr">French</option>
+            </select>
+            <button class="fa fa-exchange-alt bordered" id="swap-button"></button>
+            <select name="target" class="bordered" id="language-target">
+                <option value="en">English</option>
+                <option value="ko">Korean</option>
+                <option value="ja">Japanese</option>
+                <option value="zh-CN">Chinese (Simplified)</option>
+                <option value="zh-TW">Chinese (Traditional)</option>
+                <option value="vi">Vietnamese</option>
+                <option value="id">Indonesian</option>
+                <option value="th">Thai</option>
+                <option value="de">German</option>
+                <option value="ru">Russian</option>
+                <option value="es">Spanish</option>
+                <option value="it">Italian</option>
+                <option value="fr">French</option>
+            </select>
+        </div>
+        <textarea class="bordered" id="input-text"></textarea>
+        <div class="flex" id="toolbar-middle">
+            <button class="bordered" id="clear-button">Clear</button>
+            <div class="flex" id="honorific">
+                <span style="font-size: 1em;">Honorific</span>
+                <div class="fa fa-toggle-on" id="honorific-button"></div>
+            </div>
+            <button class="bordered" id="translate-button">Translate</button>
+        </div>
+        <textarea readonly class="bordered" id="result-text"></textarea>
+        <div id="copy-section">
+            <button class="bordered" id="copy-button">Copy</button>
+        </div>
+        <div id="links">
+            <a id="transPage">Translate this Page</a>
+            <a id="settings">Settings</a>
+            <a id="openNaver">Open in Papago</a>
+        </div>
+    </div> 
+    <div id="loader">
+        <div id="loading-animation"></div>
+    </div>
+</body>
+</html>

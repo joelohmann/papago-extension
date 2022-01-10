@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="options.css">
+  <script src="options.js"></script>
+</head>
+<body>
+  <header>
+    <img src="../icons/64.png" id="icon"></img>
+    <h1>Papago for Firefox</h1>
+  </header>
+  <section>
+    <div class="options-section" id="default-options">
+      <h3>Translation Defaults</h3>
+      <div class="flex">
+        <div class="radios">
+          <div class="option">
+            <input type="radio" name="translation-defaults" value="true" id="remember-last" checked>
+            <label for="remember-last">Remember last search</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="translation-defaults" value="false" id="use-defaults">
+            <label for="use-defaults">Use default translation settings instead</label>
+          </div>
+        </div>
+        <div class="option" id="translation-options">
+          <label for="default-target">Default target language</label>
+          <select name="default-target">
+            <option value="auto">Auto Detect</option>
+            <option value="en">English</option>
+            <option value="ko">Korean</option>
+            <option value="ja">Japanese</option>
+            <option value="zh-CN">Chinese (Simplified)</option>
+            <option value="zh-TW">Chinese (Traditional)</option>
+            <option value="vi">Vietnamese</option>
+            <option value="id">Indonesian</option>
+            <option value="th">Thai</option>
+            <option value="de">German</option>
+            <option value="ru">Russian</option>
+            <option value="es">Spanish</option>
+            <option value="it">Italian</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="default-font">Default font</label>
+          <select name="default-font">
+            <option value="default">Default</option>
+            <option value="tahoma">Tahoma</option>
+            <option value="geneva">Geneva</option>
+            <option value="sans-serif">Sans-Serif</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="default-theme">Default theme</label>
+          <select name="default-theme">
+            <option value="auto">Auto Detect</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="options-section">
+      <h3>Popup Options</h3>
+      <div class="flex">
+        <div class="option">
+          <input type="checkbox" name="use-popup" checked>
+          <label for="use-popup">Use popup</label>
+        </div> 
+        <div id="popup-options">
+          <div class="option">
+            <label for="phrase-select">Choose how to select text for translation</label>
+            <select name="phrase-select">
+              <option value="drag">Drag</option>
+              <option value="ctrl-drag">Ctrl + Drag</option>
+            </select>   
+          </div>
+          <div class="radios">
+            <div class="option">
+              <p>Popup Behavior</p>
+              <input type="radio" name="popup-display" value="icon" id="popup-display-icon" checked>
+              <label for="popup-display-icon">Click on icon to show translation results</label>
+            </div>
+            <div class="option">
+              <input type="radio" name="popup-display" value="instant" id="popup-display-instant">
+              <label for="popup-display-instant">Display translation results immediately after selecting</label>
+            </div>
+          </div>
+        </div>       
+      </div>
+    </div>
+  </section>
+</body>
+</html>
