@@ -30,6 +30,11 @@ p {
   margin: 0 0 5px 0;
 }
 
+footer {
+  text-align: center;
+  padding: 10px;
+}
+
 .options-section {
   margin: 10px;
 }
