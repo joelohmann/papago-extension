@@ -4,6 +4,7 @@ const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 
 var dragStart = false;
 var isDragging = false;
+var keyPressed = false;
 var selectedText = '';
 var button, popup;
 
@@ -14,9 +15,45 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('mousedown', mouseDown);
   window.addEventListener('mousemove', mouseMove);
   window.addEventListener('mouseup', mouseUp);
+
+  // document.addEventListener('selectionchange', selectionChange);
+  document.addEventListener('keydown', keyDown);
+  document.addEventListener('keyup', keyUp);
+});
+
+// TODO Add locale support for popup
+window.addEventListener('load', () => {
+
 })
 
+function selectionChange() {
+  // TODO Check options to see if ctrl etc should be checked for while selecting text
+  if (isDragging && dragOptionCheck(event)) {
+    let selection = window.getSelection().toString();
+
+    if (selection.length > 0 && !SELECTION_CHECK.test(selection)) {
+      // TODO (check options for instant translation or not) ? showButton() : showPopup()
+      // settimeout
+      selectedText = selection;
+      showButton(event);
+    }
+  }
+}
+
+function keyDown(event) {
+  if (event.altKey) {
+    keyPressed = true;
+  } else if (event.ctrlKey) {
+    keyPressed = true;
+  }
+}
+
+function keyUp(event) {
+  keyPressed = false;
+}
+
 // TODO Revamp how dragging is handled. isDragging, dragStart, etc
+// Selectchange but check global variables for if key is held down (separate eventlisteners that update variables for this)
 function mouseDown(event) {
   if (button.contains(event.target) || popup.contains(event.target)) return;
 
