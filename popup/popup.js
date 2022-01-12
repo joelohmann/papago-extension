@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (config.defFont) document.body.style.fontFamily = config.defFont;
 
     if (config.defTheme) {}
-  })
+  });
 
   let source = document.getElementById('language-source');
   source.addEventListener('change', onSourceChange);
@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // TODO Add locale support for source/target languages (for loop that sets each option.text)
+// TODO Do not need to separate DOMContentLoaded from load unless waiting for stylesheets, scripts, etc.
+// TODO Only need to access local storage once at document load. Set global variables?
 window.addEventListener('load', () => {
   browser.storage.local.get(['rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult'], config => {
     if (config.rememberLast != false) {
