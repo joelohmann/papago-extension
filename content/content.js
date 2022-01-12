@@ -1,50 +1,90 @@
 // Import content.html as iframe
 // Add event listeners to control bringing up content.html from icon click
+// TODO Add locale support for popup
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 
-var dragStart = false;
+// Options variables
+var usePopup = true;
+var phraseSelect = 'drag';
+var popupBehavior = 'icon';
+
+// Global variables
+// var dragStart = false;
 var isDragging = false;
 var keyPressed = false;
 var selectedText = '';
+
 var button, popup;
 
 document.addEventListener('DOMContentLoaded', () => {
-  button = createButton();
-  popup = createPopup();
-  
-  window.addEventListener('mousedown', mouseDown);
-  window.addEventListener('mousemove', mouseMove);
-  window.addEventListener('mouseup', mouseUp);
+  browser.storage.local.get(['usePopup', 'phraseSelect', 'popupBehavior'], config => {
+    usePopup = config.usePopup;
+    phraseSelect = config.phraseSelect;
+    popupBehavior = config.popupBehavior;
+  });
 
-  // document.addEventListener('selectionchange', selectionChange);
-  document.addEventListener('keydown', keyDown);
-  document.addEventListener('keyup', keyUp);
+  // If popup is disabled, then nothing will happen to the page
+  if (usePopup) {
+    button = createButton();
+    popup = createPopup();
+
+    window.addEventListener('mousedown', mouseDown);
+    window.addEventListener('mouseup', mouseUp);
+
+    document.addEventListener('selectionchange', selectionChange);
+    document.addEventListener('keydown', keyDown);
+    document.addEventListener('keyup', keyUp);
+  }
 });
 
-// TODO Add locale support for popup
-window.addEventListener('load', () => {
+function mouseDown(event) {
+  if (button.contains(event.target) || popup.contains(event.target)) return;
 
-})
+  selectedText = '';
+  hideButton();
+  hidePopup();
 
+  isDragging = true;
+}
+
+function mouseUp(event) {
+  if (button.contains(event.target) || popup.contains(event.target)) return;
+
+  let rect = selection.getRangeAt(0).getBoundingClientRect();
+  popupBehavior === 'icon' ? showButton(rect) : showPopup(rect);
+
+  isDragging = false;
+}
+
+// TODO Abandon this idea. selectionchange takes effect the second it changes, but I want icon on mouseup. 
 function selectionChange() {
-  // TODO Check options to see if ctrl etc should be checked for while selecting text
-  if (isDragging && dragOptionCheck(event)) {
-    let selection = window.getSelection().toString();
+  if (!isDragging) return;
 
-    if (selection.length > 0 && !SELECTION_CHECK.test(selection)) {
-      // TODO (check options for instant translation or not) ? showButton() : showPopup()
-      // settimeout
-      selectedText = selection;
-      showButton(event);
+  let selection = window.getSelection();
+  let text = selection.toString();
+
+  if (text.length > 0 && !SELECTION_CHECK.test(text)) {
+    if (phraseSelect === 'drag') {
+      selectedText = text;
+
+
+    } else if (keyPressed) {
+      // Custom dragging option, and that key is pressed
+      selectedText = text;
     }
+    // settimeout
   }
 }
 
 function keyDown(event) {
-  if (event.altKey) {
-    keyPressed = true;
-  } else if (event.ctrlKey) {
-    keyPressed = true;
+  if (phraseSelect !== 'drag') {
+    if (phraseSelect === 'alt-drag' && event.altKey) {
+      keyPressed = true;
+    } else if (phraseSelect === 'ctrl-drag' && event.ctrlKey) {
+      keyPressed = true;
+    } else {
+      keyPressed = false;
+    }
   }
 }
 
@@ -52,46 +92,46 @@ function keyUp(event) {
   keyPressed = false;
 }
 
-// TODO Revamp how dragging is handled. isDragging, dragStart, etc
-// Selectchange but check global variables for if key is held down (separate eventlisteners that update variables for this)
-function mouseDown(event) {
-  if (button.contains(event.target) || popup.contains(event.target)) return;
+// // TODO Revamp how dragging is handled. isDragging, dragStart, etc
+// // Selectchange but check global variables for if key is held down (separate eventlisteners that update variables for this)
+// function mouseDown(event) {
+//   if (button.contains(event.target) || popup.contains(event.target)) return;
 
-  hideButton();
-  hidePopup();
+//   hideButton();
+//   hidePopup();
 
-  dragStart = dragOptionCheck(event);
-  isDragging = false;
-}
+//   dragStart = dragOptionCheck(event);
+//   isDragging = false;
+// }
 
-function mouseMove(event) {
-  if (button.contains(event.target) || popup.contains(event.target)) return;
+// function mouseMove(event) {
+//   if (button.contains(event.target) || popup.contains(event.target)) return;
 
-  isDragging = dragStart;
-}
+//   isDragging = dragStart;
+// }
 
-function mouseUp(event) {
-  if (button.contains(event.target) || popup.contains(event.target)) return;
+// function mouseUp(event) {
+//   if (button.contains(event.target) || popup.contains(event.target)) return;
 
-  // TODO Check options to see if ctrl etc should be checked for while selecting text
-  if (isDragging && dragOptionCheck(event)) {
-    let selection = window.getSelection().toString();
+//   // TODO Check options to see if ctrl etc should be checked for while selecting text
+//   if (isDragging && dragOptionCheck(event)) {
+//     let selection = window.getSelection().toString();
 
-    if (selection.length > 0 && !SELECTION_CHECK.test(selection)) {
-      // TODO (check options for instant translation or not) ? showButton() : showPopup()
-      // settimeout
-      selectedText = selection;
-      showButton(event);
-    }
-  }
-  dragStart = false;
-  isDragging = false;
-}
+//     if (selection.length > 0 && !SELECTION_CHECK.test(selection)) {
+//       // TODO (check options for instant translation or not) ? showButton() : showPopup()
+//       // settimeout
+//       selectedText = selection;
+//       showButton(event);
+//     }
+//   }
+//   dragStart = false;
+//   isDragging = false;
+// }
 
-function dragOptionCheck(event) {
-  // TODO Check for dragging options (holding ctrl, etc)
-  return true;
-}
+// function dragOptionCheck(event) {
+//   // TODO Check for dragging options (holding ctrl, etc)
+//   return true;
+// }
 
 function createButton() {
   let container = document.createElement('div');
@@ -131,9 +171,12 @@ function createPopup() {
   return container;
 }
 
-function showButton(event) {
-  button.style.top = (event.pageY + 10) + "px";
-  button.style.left = (event.pageX + 10) + "px";
+function showButton(rect) {
+  // button.style.top = (event.pageY + 10) + "px";
+  // button.style.left = (event.pageX + 10) + "px";
+
+  button.style.top = (rect.top + rect.height + 10) + "px";
+  button.style.left = (rect.left + rect.width + 10) + "px";
   button.style.display = 'block';
 }
 
@@ -141,13 +184,15 @@ function hideButton() {
   button.style.display = 'none';
 }
 
-function showPopup(event) {
+function showPopup(rect) {
   hideButton();
 
-  setResult(event);
+  setResult();
 
-  popup.style.top = (event.pageY + 10) + "px";
-  popup.style.left = (event.pageX + 10) + "px";
+  // popup.style.top = (event.pageY + 10) + "px";
+  // popup.style.left = (event.pageX + 10) + "px";
+  popup.style.top = (rect.top + rect.height + 10) + "px";
+  popup.style.left = (rect.left + rect.width + 10) + "px";
   popup.style.display = 'block';
 }
 
@@ -172,7 +217,7 @@ function loading(bool) {
   }
 }
 
-function setResult(event) {
+function setResult() {
   let target = document.getElementById('papagoExt-language-target');
 
   loading(true);
@@ -190,7 +235,7 @@ function setResult(event) {
   });
 }
 
-function copyText(event) {
+function copyText() {
   let result = document.getElementById('papagoExt-result-text');
   navigator.clipboard.writeText(result.value);
   copied(this);
