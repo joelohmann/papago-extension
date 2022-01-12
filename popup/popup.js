@@ -67,7 +67,7 @@ window.addEventListener('load', () => {
   })
 })
 
-function onSourceChange(event) {
+function onSourceChange() {
   swapCheck();
 
   let source = this;
@@ -83,7 +83,7 @@ function onSourceChange(event) {
   storeConfig();
 }
 
-function onTargetChange(event) {
+function onTargetChange() {
   let target = this;
   let source = document.getElementById('language-source');
 
@@ -99,7 +99,7 @@ function onTargetChange(event) {
 }
 
 // TODO Add caching for a few last results
-function translateText(event) {
+function translateText() {
   let text = document.getElementById('input-text');
   if (!text.value) return;
 
@@ -201,7 +201,7 @@ function swapLangs(event) {
   storeConfig();
 }
 
-function clearText(event) {
+function clearText() {
   let text = document.getElementById('input-text');
   let result = document.getElementById('result-text');
 
@@ -209,13 +209,13 @@ function clearText(event) {
   storeConfig();
 }
 
-function copyText(event) {
+function copyText() {
   let result = document.getElementById('result-text');
   navigator.clipboard.writeText(result.value);
   copied();
 }
 
-function honorificToggle(event) {
+function honorificToggle() {
   let honorButton = document.getElementById('honorific-button');
 
   if (honorButton.className.includes('on')) {
@@ -225,7 +225,7 @@ function honorificToggle(event) {
   }
 }
 
-function translatePage(event) {
+function translatePage() {
   let source = document.getElementById('language-source');
   let target = document.getElementById('language-target');
 
