@@ -4,78 +4,93 @@
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 
 // Options variables
-var usePopup = true;
-var phraseSelect = 'drag';
-var popupBehavior = 'icon';
+var usePopup, phraseSelect, popupBehavior;
 
 // Global variables
-// var dragStart = false;
-var isDragging = false;
+var dragging = false;
+var selectionReady = false;
 var keyPressed = false;
-var selectedText = '';
+var selection;
 
 var button, popup;
 
 document.addEventListener('DOMContentLoaded', () => {
   browser.storage.local.get(['usePopup', 'phraseSelect', 'popupBehavior'], config => {
-    usePopup = config.usePopup;
-    phraseSelect = config.phraseSelect;
-    popupBehavior = config.popupBehavior;
+    usePopup = config.usePopup ? config.usePopup : true;
+    phraseSelect = config.phraseSelect ? config.phraseSelect : 'drag';
+    popupBehavior = config.popupBehavior ? config.popupBehavior : 'icon';
+
+    // If popup is disabled, then nothing will happen to the page
+    if (usePopup) {
+      button = createButton();
+      popup = createPopup();
+
+      window.addEventListener('mousedown', mouseDown);
+      window.addEventListener('mouseup', mouseUp);
+
+      document.addEventListener('selectionchange', selectionChange);
+      document.addEventListener('keydown', keyDown);
+      document.addEventListener('keyup', keyUp);
+    }
   });
-
-  // If popup is disabled, then nothing will happen to the page
-  if (usePopup) {
-    button = createButton();
-    popup = createPopup();
-
-    window.addEventListener('mousedown', mouseDown);
-    window.addEventListener('mouseup', mouseUp);
-
-    document.addEventListener('selectionchange', selectionChange);
-    document.addEventListener('keydown', keyDown);
-    document.addEventListener('keyup', keyUp);
-  }
 });
 
 function mouseDown(event) {
   if (button.contains(event.target) || popup.contains(event.target)) return;
 
-  selectedText = '';
+  selection = null;
   hideButton();
   hidePopup();
 
-  isDragging = true;
+  dragging = true;
 }
 
 function mouseUp(event) {
   if (button.contains(event.target) || popup.contains(event.target)) return;
 
-  let rect = selection.getRangeAt(0).getBoundingClientRect();
-  popupBehavior === 'icon' ? showButton(rect) : showPopup(rect);
+  if (selectionReady) {
+    popupBehavior === 'icon' ? showButton() : showPopup();
 
-  isDragging = false;
+    selectionReady = false;
+  }
+
+  dragging = false;
 }
 
-// TODO Abandon this idea. selectionchange takes effect the second it changes, but I want icon on mouseup. 
 function selectionChange() {
-  if (!isDragging) return;
-
-  let selection = window.getSelection();
-  let text = selection.toString();
+  let tempSelection = window.getSelection();
+  let text = tempSelection.toString();
 
   if (text.length > 0 && !SELECTION_CHECK.test(text)) {
     if (phraseSelect === 'drag') {
-      selectedText = text;
+      // Selection check passed: store selection
+      selection = tempSelection;
 
-
+      if (dragging) {
+        // Mouse is held down. Pass showing icon/popup to mouseup event
+        selectionReady = true;
+      } 
     } else if (keyPressed) {
-      // Custom dragging option, and that key is pressed
-      selectedText = text;
+      // Selection check passed and dragging key pressed: store selection
+      selection = tempSelection;
+
+      if (dragging) {
+        selectionReady = true;
+      }
+    } else {
+      // Dragging key is not pressed: do not store selection
+      selection = null;
+      selectionReady = false;
     }
     // settimeout
+  } else {
+    // Selection check failed: don't store selection
+    selection = null;
+    selectionReady = false;
   }
 }
 
+// TODO Stress test this
 function keyDown(event) {
   if (phraseSelect !== 'drag') {
     if (phraseSelect === 'alt-drag' && event.altKey) {
@@ -89,49 +104,12 @@ function keyDown(event) {
 }
 
 function keyUp(event) {
-  keyPressed = false;
+  if (phraseSelect === 'alt-drag' && event.altKey) {
+    keyPressed = false;
+  } else if (phraseSelect === 'ctrl-drag' && event.ctrlKey) {
+    keyPressed = false;
+  }
 }
-
-// // TODO Revamp how dragging is handled. isDragging, dragStart, etc
-// // Selectchange but check global variables for if key is held down (separate eventlisteners that update variables for this)
-// function mouseDown(event) {
-//   if (button.contains(event.target) || popup.contains(event.target)) return;
-
-//   hideButton();
-//   hidePopup();
-
-//   dragStart = dragOptionCheck(event);
-//   isDragging = false;
-// }
-
-// function mouseMove(event) {
-//   if (button.contains(event.target) || popup.contains(event.target)) return;
-
-//   isDragging = dragStart;
-// }
-
-// function mouseUp(event) {
-//   if (button.contains(event.target) || popup.contains(event.target)) return;
-
-//   // TODO Check options to see if ctrl etc should be checked for while selecting text
-//   if (isDragging && dragOptionCheck(event)) {
-//     let selection = window.getSelection().toString();
-
-//     if (selection.length > 0 && !SELECTION_CHECK.test(selection)) {
-//       // TODO (check options for instant translation or not) ? showButton() : showPopup()
-//       // settimeout
-//       selectedText = selection;
-//       showButton(event);
-//     }
-//   }
-//   dragStart = false;
-//   isDragging = false;
-// }
-
-// function dragOptionCheck(event) {
-//   // TODO Check for dragging options (holding ctrl, etc)
-//   return true;
-// }
 
 function createButton() {
   let container = document.createElement('div');
@@ -148,7 +126,6 @@ function createButton() {
   return container;
 }
 
-// TODO You can't access the DOM of an iframe from an outside origin. Need a different way of bringing in html (papago for chrome style, maybe)
 function createPopup() {
   let container = document.createElement('div');
   container.className = 'papagoExt-popup';
@@ -156,27 +133,24 @@ function createPopup() {
   let path = browser.runtime.getURL('content/content.html');
   readFile(path, (res) => {
     container.innerHTML = res;
-  });
-
-  container.addEventListener('DOMContentLoaded', () => {
+  
     let target = document.getElementById('papagoExt-language-target');
     target.addEventListener('change', setResult);
 
     let copyButton = document.getElementById('papagoExt-copy-button');
     copyButton.addEventListener('click', copyText);
-  })
+  });
   
   document.body.appendChild(container);
 
   return container;
 }
 
-function showButton(rect) {
-  // button.style.top = (event.pageY + 10) + "px";
-  // button.style.left = (event.pageX + 10) + "px";
+function showButton() {
+  let rect = selection.getRangeAt(0).getBoundingClientRect();
 
-  button.style.top = (rect.top + rect.height + 10) + "px";
-  button.style.left = (rect.left + rect.width + 10) + "px";
+  button.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
+  button.style.left = (rect.right + getPageXOffset() + 5) + "px";
   button.style.display = 'block';
 }
 
@@ -184,15 +158,16 @@ function hideButton() {
   button.style.display = 'none';
 }
 
-function showPopup(rect) {
+function showPopup() {
   hideButton();
 
   setResult();
 
-  // popup.style.top = (event.pageY + 10) + "px";
-  // popup.style.left = (event.pageX + 10) + "px";
-  popup.style.top = (rect.top + rect.height + 10) + "px";
-  popup.style.left = (rect.left + rect.width + 10) + "px";
+  // TODO Try last in index (selection.rangeCount)
+  let rect = selection.getRangeAt(0).getBoundingClientRect();
+
+  popup.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
+  popup.style.left = (rect.right + getPageXOffset() + 5) + "px";
   popup.style.display = 'block';
 }
 
@@ -222,7 +197,7 @@ function setResult() {
 
   loading(true);
 
-  sendTranslate(target.value, selectedText)
+  sendTranslate(target.value, selection.toString())
   .then(res => {
     let result = document.getElementById('papagoExt-result-text');
     result.value = res.message.result.translatedText;
@@ -241,16 +216,16 @@ function copyText() {
   copied(this);
 }
 
-function copied(button) {
+function copied(copyButton) {
   let div = document.createElement('div');
-  div.textContent = "- Copied!";
-  div.style = 'position: absolute; left: 50%; transform: translateX(50%); animation: fade 2s ease-in;';
+  div.textContent = "Copied!";
+  div.style = 'position: absolute; left: 50%; transform: translateX(65%); animation: fade 2s ease-in;';
 
-  button.parentElement.insertBefore(div, button);
+  copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
 }
 
-// Runtime messages to background script
+// Runtime message to background script
 async function sendTranslate(targetLang, text) {
   return browser.runtime.sendMessage({
     action: 'detect',
@@ -266,6 +241,7 @@ async function sendTranslate(targetLang, text) {
   })
 }
 
+// For loading html files
 function readFile(path, callback){
   fetch(path, {mode:'same-origin'})
   .then(function(res) {
@@ -280,4 +256,12 @@ function readFile(path, callback){
 
       reader.readAsText(blob); 
   });
+};
+
+function getPageXOffset() {
+  return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+};
+
+function getPageYOffset() {
+  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 };
