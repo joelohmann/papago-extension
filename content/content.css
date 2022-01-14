@@ -1,3 +1,5 @@
+/* Make most, if not all, attributes !important */
+
 .papagoExt-button {
   position: absolute;
   display: none;
@@ -65,9 +67,10 @@
   font-family: inherit;
   font-size: inherit;
   background-color: #323232;
+  box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 5px;
   flex-grow: 3;
   resize: none;
 }
