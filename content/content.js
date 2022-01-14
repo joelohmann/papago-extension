@@ -12,7 +12,7 @@ var selectionReady = false;
 var keyPressed = false;
 var selection;
 
-var button, popup;
+var icon, popup;
 
 document.addEventListener('DOMContentLoaded', () => {
   browser.storage.local.get(['usePopup', 'phraseSelect', 'popupBehavior'], config => {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If popup is disabled, then nothing will happen to the page
     if (usePopup) {
-      button = createButton();
+      icon = createIcon();
       popup = createPopup();
 
       window.addEventListener('mousedown', mouseDown);
@@ -36,20 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function mouseDown(event) {
-  if (button.contains(event.target) || popup.contains(event.target)) return;
+  if (icon.contains(event.target) || popup.contains(event.target)) return;
 
   selection = null;
-  hideButton();
+  hideIcon();
   hidePopup();
 
   dragging = true;
 }
 
 function mouseUp(event) {
-  if (button.contains(event.target) || popup.contains(event.target)) return;
+  if (icon.contains(event.target) || popup.contains(event.target)) return;
 
   if (selectionReady) {
-    popupBehavior === 'icon' ? showButton() : showPopup();
+    popupBehavior === 'icon' ? showIcon() : showPopup();
 
     selectionReady = false;
   }
@@ -111,14 +111,14 @@ function keyUp(event) {
   }
 }
 
-function createButton() {
+function createIcon() {
   let container = document.createElement('div');
   container.className = 'papagoExt-button';
 
-  let icon = document.createElement('img');
-  icon.src = browser.runtime.getURL('icons/19.png');
+  let image = document.createElement('div');
+  image.style.background = `url(${browser.runtime.getURL('icons/19.png')}) no-repeat`;
 
-  container.appendChild(icon);
+  container.appendChild(image);
   document.body.appendChild(container);
 
   container.addEventListener('click', showPopup);
@@ -146,20 +146,20 @@ function createPopup() {
   return container;
 }
 
-function showButton() {
+function showIcon() {
   let rect = selection.getRangeAt(0).getBoundingClientRect();
 
-  button.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
-  button.style.left = (rect.right + getPageXOffset() + 5) + "px";
-  button.style.display = 'block';
+  icon.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
+  icon.style.left = (rect.right + getPageXOffset() + 5) + "px";
+  icon.style.display = 'block';
 }
 
-function hideButton() {
-  button.style.display = 'none';
+function hideIcon() {
+  icon.style.display = 'none';
 }
 
 function showPopup() {
-  hideButton();
+  hideIcon();
 
   setResult();
 
