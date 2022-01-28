@@ -8,8 +8,8 @@
   height: 19px;
   z-index: 2147483647;
   background-color: white;
-  border: 1px solid white;
-  border-radius: 0.25rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   padding: 3px;
   cursor: pointer;
@@ -88,6 +88,7 @@
 }
 
 #papagoExt-loading-animation {
+  box-sizing: content-box;
   width: 50px;
   height: 50px;
   border: 10px solid #ebebeb;
