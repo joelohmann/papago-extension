@@ -49,7 +49,7 @@ function mouseUp(event) {
   if (icon.contains(event.target) || popup.contains(event.target)) return;
 
   if (selectionReady) {
-    popupBehavior === 'icon' ? showIcon() : showPopup();
+    popupBehavior === 'icon' ? showIcon(event) : showPopup(event);
 
     selectionReady = false;
   }
@@ -116,11 +116,15 @@ function createIcon() {
   container.className = 'papagoExt-button';
 
   let image = document.createElement('div');
-  image.style.background = `url(${browser.runtime.getURL('icons/19.png')}) no-repeat`;
+  image.style = `background-image: url(${browser.runtime.getURL('icons/19.png')}); background-size: 19px; height: 19px; width: 19px;`;
 
   container.appendChild(image);
   document.body.appendChild(container);
 
+  container.addEventListener('mousedown', e => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
   container.addEventListener('click', showPopup);
 
   return container;
@@ -146,11 +150,19 @@ function createPopup() {
   return container;
 }
 
-function showIcon() {
+function showIcon(event) {
   let rect = selection.getRangeAt(0).getBoundingClientRect();
 
-  icon.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
-  icon.style.left = (rect.right + getPageXOffset() + 5) + "px";
+  let offset, top, left;
+
+  offset = event.clientY > (rect.top + rect.bottom) / 2 ? rect.bottom - 1 : rect.top + 1 - 27;
+  top = offset + getPageYOffset();
+
+  offset = event.clientX > (rect.left + rect.right) / 2 ? -28 : 1;
+  left = event.clientX + offset + getPageXOffset();
+
+  icon.style.top = top + "px";
+  icon.style.left = left + "px";
   icon.style.display = 'block';
 }
 
@@ -158,7 +170,8 @@ function hideIcon() {
   icon.style.display = 'none';
 }
 
-function showPopup() {
+// TODO Copy positioning approach from icon. Also display on top/bottom of selection based on top/bottom half of screen.
+function showPopup(event) {
   hideIcon();
 
   setResult();
@@ -219,7 +232,7 @@ function copyText() {
 function copied(copyButton) {
   let div = document.createElement('div');
   div.textContent = "Copied!";
-  div.style = 'position: absolute; left: 50%; transform: translateX(65%); animation: fade 2s ease-in;';
+  div.style = 'position: absolute; left: 50%; transform: translateX(100%); animation: fade 2s ease-in;';
 
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
