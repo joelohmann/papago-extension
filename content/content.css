@@ -59,6 +59,11 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+/* Make !important properties so that sites can't override. */
+#papagoExt-language-target{
+
+}
+
 #papagoExt-copy-button {
   cursor: pointer;
 }
