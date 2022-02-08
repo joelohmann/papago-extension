@@ -49,7 +49,7 @@ function mouseUp(event) {
   if (icon.contains(event.target) || popup.contains(event.target)) return;
 
   if (selectionReady) {
-    popupBehavior === 'icon' ? showIcon(event) : showPopup(event);
+    popupBehavior === 'icon' ? showIcon(event) : showPopup();
 
     selectionReady = false;
   }
@@ -158,6 +158,12 @@ function showIcon(event) {
   offset = event.clientY > (rect.top + rect.bottom) / 2 ? rect.bottom - 1 : rect.top + 1 - 27;
   top = offset + getPageYOffset();
 
+  if (top < getPageYOffset()) {
+    top = 5;
+  } else if (top > (window.innerHeight - 27 + getPageYOffset())) {
+    top = window.innerHeight - 5 - 27 + getPageYOffset();
+  }
+
   offset = event.clientX > (rect.left + rect.right) / 2 ? -28 : 1;
   left = event.clientX + offset + getPageXOffset();
 
@@ -170,17 +176,33 @@ function hideIcon() {
   icon.style.display = 'none';
 }
 
-// TODO Copy positioning approach from icon. Also display on top/bottom of selection based on top/bottom half of screen.
-function showPopup(event) {
+function showPopup() {
   hideIcon();
 
   setResult();
 
-  // TODO Try last in index (selection.rangeCount)
   let rect = selection.getRangeAt(0).getBoundingClientRect();
 
-  popup.style.top = (rect.bottom + getPageYOffset() + 5) + "px";
-  popup.style.left = (rect.right + getPageXOffset() + 5) + "px";
+  let top = getPageYOffset();
+  if ((rect.bottom + rect.top) < window.innerHeight) {
+    // Selection is in the top half of screen
+    top += rect.bottom + 5;
+  } else {
+    // Selection is in bottom half of screen.
+    top += rect.top - 5 - 125;
+  }
+
+  let left = ((rect.right + rect.left) / 2) - 175 + getPageXOffset();
+
+  // Check if popup will be off screen.
+  if (left > (window.innerWidth - 350 + getPageXOffset())) {
+    left = window.innerWidth - 25 - 350 + getPageXOffset();
+  } else if (left < (10 + getPageXOffset())) {
+    left = 10 + getPageXOffset();
+  }
+
+  popup.style.top = top + "px";
+  popup.style.left = left + "px";
   popup.style.display = 'block';
 }
 
