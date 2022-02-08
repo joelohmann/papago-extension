@@ -116,7 +116,7 @@ function createIcon() {
   container.className = 'papagoExt-button';
 
   let image = document.createElement('div');
-  image.style = `background-image: url(${browser.runtime.getURL('icons/19.png')}); background-size: 19px; height: 19px; width: 19px;`;
+  image.style = `background-image: url(${browser.runtime.getURL('icons/19.png')}); height: 19px; width: 19px;`;
 
   container.appendChild(image);
   document.body.appendChild(container);
