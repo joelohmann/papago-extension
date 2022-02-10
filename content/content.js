@@ -172,6 +172,7 @@ function showIcon(event) {
   icon.style.display = 'block';
 }
 
+// Add and remove from DOM instead of changing display? 
 function hideIcon() {
   icon.style.display = 'none';
 }
