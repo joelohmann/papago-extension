@@ -1,4 +1,10 @@
-/* Make most, if not all, attributes !important */
+/* Prevent sites from overriding custom styling */
+.papagoExt-popup * {
+  all: initial;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
 
 .papagoExt-button {
   position: absolute;
@@ -17,7 +23,7 @@
 
 .papagoExt-popup {
   font-family: Tahoma, Geneva, sans-serif;
-  font-size: 0.9em;
+  font-size: 16px;
   background-color: #323232;
   color: #ebebeb;
   box-sizing: border-box;
@@ -50,8 +56,6 @@
 .papagoExt-bordered {
   background-color: #484848;
   color: #ebebeb;
-  font-family: inherit;
-  font-size: inherit;
   margin: 0 0 5px 0;
   border: 1px solid #595959;
   border-radius: 0.25rem;
@@ -59,13 +63,17 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* Make !important properties so that sites can't override. */
-#papagoExt-language-target{
-
+/* TODO Add drop down arrow back */
+#papagoExt-language-target {
+  width: 170px;
+  height: 22px;
 }
 
 #papagoExt-copy-button {
   cursor: pointer;
+  text-align: center;
+  width: 45px;
+  height: 22px;
 }
 
 #papagoExt-result-text {
