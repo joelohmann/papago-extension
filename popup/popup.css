@@ -7,10 +7,7 @@ html {
 }
 
 body {
-    font-family: Tahoma, Geneva, sans-serif;
     font-size: 16px;
-    background-color: #323232;
-    color: #ebebeb;
     position: relative;
     width: 400px;
     margin: 0;
@@ -32,6 +29,7 @@ button {
 }
 
 select {
+    cursor: pointer;
     width: 170px;
 }
 
@@ -45,10 +43,9 @@ textarea {
 button,
 select,
 textarea {
-    background-color: #484848;
-    color: #ebebeb;
     font-family: inherit;
     font-size: inherit;
+    color: inherit;
 }
 
 .container {
@@ -65,9 +62,7 @@ textarea {
 }
 
 .bordered {
-    border: 1px solid #595959;
     border-radius: 0.25rem;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -103,10 +98,6 @@ textarea {
     background-color: #009cff;
     color: #fff;
     transition: background-color 0.25s;
-}
-
-#result-text {
-    background-color: #323232;
 }
 
 #copy-section {
@@ -165,11 +156,6 @@ a:hover {
     color: #4472b3;
 }
 
-select:hover, button:hover {
-    cursor: pointer;
-    background-color: #141414;
-}
-
 #translate-button:hover {
     background-color: #0064a3;
 }
@@ -192,4 +178,46 @@ select:hover, button:hover {
     100% {
         opacity: 0;
     }
+}
+
+/* Light mode */
+html.light body {
+    background-color: #fff;
+    color: #333;
+    border-color: #bbb;
+}
+
+html.light .bordered {
+background-color: #fafafa;
+border: 1px solid #dcdcdc;
+}
+
+html.light #result-text {
+background-color: #fff;
+}
+
+html.light select:hover,
+html.light button:hover {
+background-color: #c9c9c9;
+}
+
+/* Dark mode */
+html.dark body {
+background-color: #323232;
+color: #ebebeb;
+}
+
+html.dark .bordered {
+background-color: #484848;
+border: 1px solid #595959;
+box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+html.dark #result-text {
+background-color: #323232;
+}
+
+html.dark select:hover,
+html.dark button:hover {
+background-color: #383838;
 }
