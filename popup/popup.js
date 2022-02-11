@@ -1,10 +1,29 @@
+// Constants
+const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
+
 // TODO Check for options first. They supercede any 'previous search' config
-// TODO Add eventListeners
 document.addEventListener('DOMContentLoaded', () => {
   browser.storage.local.get(['defFont', 'defTheme'], config => {
-    if (config.defFont) document.body.style.fontFamily = config.defFont;
+    let defFont = config.defFont ? config.defFont : 'Tahoma';
+    let defTheme = config.defTheme ? config.defTheme : 'auto';
 
-    if (config.defTheme) {}
+    // Set font
+    document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
+
+    // Set theme 
+    if (defTheme == 'auto') {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        // Light mode
+        document.documentElement.classList.add('light');
+      } else {
+        // Dark mode
+        document.documentElement.classList.add('dark');
+      }
+    } else if (defTheme == 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
   });
 
   let source = document.getElementById('language-source');
