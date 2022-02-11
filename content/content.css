@@ -60,11 +60,11 @@
   border: 1px solid #595959;
   border-radius: 0.25rem;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* TODO Add drop down arrow back */
 #papagoExt-language-target {
+  appearance: auto;
   width: 170px;
   height: 22px;
 }
@@ -109,6 +109,15 @@
   border-top: 10px solid #555;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+#papagoExt-language-target:hover {
+  cursor: pointer;
+  background-color: #141414;
+}
+
+#papagoExt-copy-button:hover {
+  background-color: #141414;
 }
 
 @keyframes spin {

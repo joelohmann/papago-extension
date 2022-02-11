@@ -24,6 +24,7 @@ a {
     color: #5892e4;
     text-decoration: none;
     cursor: pointer;
+    transition: color 0.25s;
 }
 
 button {
@@ -67,7 +68,7 @@ textarea {
     border: 1px solid #595959;
     border-radius: 0.25rem;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 #toolbar-top {
@@ -101,6 +102,7 @@ textarea {
 #translate-button {
     background-color: #009cff;
     color: #fff;
+    transition: background-color 0.25s;
 }
 
 #result-text {
@@ -157,6 +159,19 @@ a:nth-child(3) {
     border-top: 10px solid #555;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
+}
+
+a:hover {
+    color: #4472b3;
+}
+
+select:hover, button:hover {
+    cursor: pointer;
+    background-color: #141414;
+}
+
+#translate-button:hover {
+    background-color: #0064a3;
 }
 
 @keyframes spin {
