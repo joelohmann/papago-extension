@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function storeConfig(event) {
+function storeConfig() {
   var newConfig = {};
 
   var defFont = document.getElementsByName('default-font')[0].value;
