@@ -1,7 +1,6 @@
-// Import content.html as iframe
-// Add event listeners to control bringing up content.html from icon click
 // TODO Add locale support for popup
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
+const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
 
 // Options variables
 var usePopup, phraseSelect, popupBehavior;
@@ -15,7 +14,10 @@ var selection;
 var icon, popup;
 
 document.addEventListener('DOMContentLoaded', () => {
-  browser.storage.local.get(['usePopup', 'phraseSelect', 'popupBehavior'], config => {
+  browser.storage.local.get(['defFont', 'defTheme', 'usePopup', 'phraseSelect', 'popupBehavior'], config => {
+    let defFont = config.defFont ? config.defFont : 'Tahoma';
+    let defTheme = config.defTheme ? config.defTheme : 'auto';
+
     usePopup = config.usePopup ? config.usePopup : true;
     phraseSelect = config.phraseSelect ? config.phraseSelect : 'drag';
     popupBehavior = config.popupBehavior ? config.popupBehavior : 'icon';
@@ -31,6 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('selectionchange', selectionChange);
       document.addEventListener('keydown', keyDown);
       document.addEventListener('keyup', keyUp);
+
+      // Set font
+      popup.style.fontFamily = defFont + ', ' + FONTS.join(', ');
+
+      // Set theme 
+      if (defTheme == 'auto') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          // Light mode
+          popup.classList.add('light');
+        } else {
+          // Dark mode
+          popup.classList.add('dark');
+        }
+      } else if (defTheme == 'light') {
+        popup.classList.add('light');
+      } else {
+        popup.classList.add('dark');
+      }
     }
   });
 });
@@ -255,7 +275,7 @@ function copyText() {
 function copied(copyButton) {
   let div = document.createElement('div');
   div.textContent = "Copied!";
-  div.style = 'position: absolute; left: 50%; transform: translateX(100%); animation: fade 2s ease-in;';
+  div.style = 'animation: fade 2s ease-in;';
 
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
