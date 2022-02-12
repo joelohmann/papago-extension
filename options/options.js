@@ -48,7 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // TODO: Add locale support
+  // Locales
+  document.getElementById('translation-defaults-title').textContent = browser.i18n.getMessage('translation_defaults');
+  document.getElementById('remember-last-label').textContent = browser.i18n.getMessage('remember_last');
+  document.getElementById('use-defaults-label').textContent = browser.i18n.getMessage('use_default');
+  
+  document.getElementById('default-target-label').textContent = browser.i18n.getMessage('default_target');
+  document.getElementById('en').textContent = browser.i18n.getMessage('en');
+  document.getElementById('ko').textContent = browser.i18n.getMessage('ko');
+  document.getElementById('ja').textContent = browser.i18n.getMessage('ja');
+  document.getElementById('zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+  document.getElementById('zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+  document.getElementById('vi').textContent = browser.i18n.getMessage('vi');
+  document.getElementById('id').textContent = browser.i18n.getMessage('id');
+  document.getElementById('th').textContent = browser.i18n.getMessage('th');
+  document.getElementById('de').textContent = browser.i18n.getMessage('de');
+  document.getElementById('ru').textContent = browser.i18n.getMessage('ru');
+  document.getElementById('es').textContent = browser.i18n.getMessage('es');
+  document.getElementById('it').textContent = browser.i18n.getMessage('it');
+  document.getElementById('fr').textContent = browser.i18n.getMessage('fr');
+
+  document.getElementById('default-font-label').textContent = browser.i18n.getMessage('default_font');
+  document.getElementById('default').textContent = browser.i18n.getMessage('default');
+
+  document.getElementById('default-theme-label').textContent = browser.i18n.getMessage('default_theme');
+  document.getElementById('auto').textContent = browser.i18n.getMessage('auto_detect');
+  document.getElementById('light').textContent = browser.i18n.getMessage('light');
+  document.getElementById('dark').textContent = browser.i18n.getMessage('dark');
+
+  document.getElementById('popup-options-title').textContent = browser.i18n.getMessage('popup_options');
+  document.getElementById('use-popup-label').textContent = browser.i18n.getMessage('use_popup');
+  
+  document.getElementById('phrase-select-label').textContent = browser.i18n.getMessage('phrase_select');
+  document.getElementById('drag').textContent = browser.i18n.getMessage('drag');
+  document.getElementById('ctrl-drag').textContent = browser.i18n.getMessage('ctrl_drag');
+  document.getElementById('alt-drag').textContent = browser.i18n.getMessage('alt_drag');
+
+  document.getElementById('popup-behavior-title').textContent = browser.i18n.getMessage('popup_behavior');
+  document.getElementById('popup-display-icon-label').textContent = browser.i18n.getMessage('popup_display_icon');
+  document.getElementById('popup-display-instant-label').textContent = browser.i18n.getMessage('popup_display_instant');
+
+  document.getElementById('footer').textContent = browser.i18n.getMessage('footer');
 });
 
 function storeConfig(event) {

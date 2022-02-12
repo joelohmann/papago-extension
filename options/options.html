@@ -15,80 +15,80 @@
   </header>
   <section>
     <div class="options-section" id="default-options">
-      <h3>Translation Defaults</h3>
+      <h3 id="translation-defaults-title">Translation Defaults</h3>
       <div class="flex">
         <div class="radios">
           <div class="option">
             <input type="radio" name="translation-defaults" value="true" id="remember-last" checked>
-            <label for="remember-last">Remember last search</label>
+            <label for="remember-last" id="remember-last-label">Remember last search</label>
           </div>
           <div class="option">
             <input type="radio" name="translation-defaults" value="false" id="use-defaults">
-            <label for="use-defaults">Use default translation settings instead</label>
+            <label for="use-defaults" id="use-defaults-label">Use default translation settings instead</label>
           </div>
         </div>
         <div class="option" id="translation-options">
-          <label for="default-target">Default target language</label>
+          <label for="default-target" id="default-target-label">Default target language</label>
           <select name="default-target">
-            <option class="en" value="en">English</option>
-            <option class="ko" value="ko">Korean</option>
-            <option class="ja" value="ja">Japanese</option>
-            <option class="zh-CN" value="zh-CN">Chinese (Simplified)</option>
-            <option class="zh-TW" value="zh-TW">Chinese (Traditional)</option>
-            <option class="vi" value="vi">Vietnamese</option>
-            <option class="id" value="id">Indonesian</option>
-            <option class="th" value="th">Thai</option>
-            <option class="de" value="de">German</option>
-            <option class="ru" value="ru">Russian</option>
-            <option class="es" value="es">Spanish</option>
-            <option class="it" value="it">Italian</option>
-            <option class="fr" value="fr">French</option>
+            <option id="en" value="en">English</option>
+            <option id="ko" value="ko">Korean</option>
+            <option id="ja" value="ja">Japanese</option>
+            <option id="zh-CN" value="zh-CN">Chinese (Simplified)</option>
+            <option id="zh-TW" value="zh-TW">Chinese (Traditional)</option>
+            <option id="vi" value="vi">Vietnamese</option>
+            <option id="id" value="id">Indonesian</option>
+            <option id="th" value="th">Thai</option>
+            <option id="de" value="de">German</option>
+            <option id="ru" value="ru">Russian</option>
+            <option id="es" value="es">Spanish</option>
+            <option id="it" value="it">Italian</option>
+            <option id="fr" value="fr">French</option>
           </select>
         </div>
         <div class="option">
-          <label for="default-font">Default font</label>
+          <label for="default-font" id="default-font-label">Default font</label>
           <select name="default-font">
-            <option value="default">Default</option>
+            <option id="default" value="default">Default</option>
             <option value="tahoma">Tahoma</option>
             <option value="geneva">Geneva</option>
             <option value="sans-serif">Sans-Serif</option>
           </select>
         </div>
         <div class="option">
-          <label for="default-theme">Default theme</label>
+          <label for="default-theme" id="default-theme-label">Default theme</label>
           <select name="default-theme">
-            <option value="auto">Auto Detect</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
+            <option id="auto" value="auto">Auto Detect</option>
+            <option id="light" value="light">Light</option>
+            <option id="dark" value="dark">Dark</option>
           </select>
         </div>
       </div>
     </div>
     <div class="options-section">
-      <h3>Popup Options</h3>
+      <h3 id="popup-options-title">Popup Options</h3>
       <div class="flex">
         <div class="option">
           <input type="checkbox" name="use-popup" checked>
-          <label for="use-popup">Use popup</label>
+          <label for="use-popup" id="use-popup-label">Use popup</label>
         </div> 
         <div id="popup-options">
           <div class="option">
-            <label for="phrase-select">Choose how to select text for translation</label>
+            <label for="phrase-select" id="phrase-select-label">Choose how to select text for translation</label>
             <select name="phrase-select">
-              <option value="drag">Drag</option>
-              <option value="ctrl-drag">Ctrl + Drag</option>
-              <option value="alt-drag">Alt + Drag</option>
+              <option id="drag" value="drag">Drag</option>
+              <option id="ctrl-drag" value="ctrl-drag">Ctrl + Drag</option>
+              <option id="alt-drag" value="alt-drag">Alt + Drag</option>
             </select>   
           </div>
           <div class="radios">
             <div class="option">
-              <p>Popup Behavior</p>
+              <p id="popup-behavior-title">Popup Behavior</p>
               <input type="radio" name="popup-display" value="icon" id="popup-display-icon" checked>
-              <label for="popup-display-icon">Click on icon to show translation results</label>
+              <label for="popup-display-icon" id="popup-display-icon-label">Click on icon to show translation results</label>
             </div>
             <div class="option">
               <input type="radio" name="popup-display" value="instant" id="popup-display-instant">
-              <label for="popup-display-instant">Display translation results immediately after selecting</label>
+              <label for="popup-display-instant" id="popup-display-instant-label">Display translation results immediately after selecting</label>
             </div>
           </div>
         </div>       
