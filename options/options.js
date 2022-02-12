@@ -1,4 +1,3 @@
-// TODO Add locale support
 document.addEventListener('DOMContentLoaded', () => {
   var defTargetLang = document.getElementsByName('default-target')[0];
   defTargetLang.addEventListener('change', storeConfig);
@@ -48,9 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // TODO: Add locale support
 });
 
-function storeConfig() {
+function storeConfig(event) {
   var newConfig = {};
 
   var defFont = document.getElementsByName('default-font')[0].value;
