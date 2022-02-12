@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Locales
   document.getElementById('translation-defaults-title').textContent = browser.i18n.getMessage('translation_defaults');
+  
   document.getElementById('remember-last-label').textContent = browser.i18n.getMessage('remember_last');
+  
   document.getElementById('use-defaults-label').textContent = browser.i18n.getMessage('use_default');
   
   document.getElementById('default-target-label').textContent = browser.i18n.getMessage('default_target');
