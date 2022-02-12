@@ -1,4 +1,4 @@
-// TODO Add locale support for popup
+// Constants
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
 
@@ -13,9 +13,10 @@ var selection;
 
 var icon, popup;
 
+
 document.addEventListener('DOMContentLoaded', () => {
   browser.storage.local.get(['defFont', 'defTheme', 'usePopup', 'phraseSelect', 'popupBehavior'], config => {
-    let defFont = config.defFont ? config.defFont : 'Tahoma';
+    let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
 
     usePopup = config.usePopup ? config.usePopup : true;
@@ -77,6 +78,7 @@ function mouseUp(event) {
   dragging = false;
 }
 
+// TODO: Hide icon if selection changes and mouse is not held (highlight and delete, for example. Or random site bs)
 function selectionChange() {
   let tempSelection = window.getSelection();
   let text = tempSelection.toString();
@@ -110,7 +112,7 @@ function selectionChange() {
   }
 }
 
-// TODO Stress test this
+// TODO: Stress test this
 function keyDown(event) {
   if (phraseSelect !== 'drag') {
     if (phraseSelect === 'alt-drag' && event.altKey) {
@@ -157,15 +159,31 @@ function createPopup() {
   let path = browser.runtime.getURL('content/content.html');
   readFile(path, (res) => {
     container.innerHTML = res;
+    document.body.appendChild(container);
   
     let target = document.getElementById('papagoExt-language-target');
     target.addEventListener('change', setResult);
 
     let copyButton = document.getElementById('papagoExt-copy-button');
     copyButton.addEventListener('click', copyText);
+
+    // Locales
+    document.getElementsByClassName('en').each(element => {element.textContent = browser.i18n.getMessage('en')});
+    document.getElementsByClassName('ko').each(element => {element.textContent = browser.i18n.getMessage('ko')});
+    document.getElementsByClassName('ja').each(element => {element.textContent = browser.i18n.getMessage('ja')});
+    document.getElementsByClassName('zh-CN').each(element => {element.textContent = browser.i18n.getMessage('zh_CN')});
+    document.getElementsByClassName('zh-TW').each(element => {element.textContent = browser.i18n.getMessage('zh_TW')});
+    document.getElementsByClassName('vi').each(element => {element.textContent = browser.i18n.getMessage('vi')});
+    document.getElementsByClassName('id').each(element => {element.textContent = browser.i18n.getMessage('id')});
+    document.getElementsByClassName('th').each(element => {element.textContent = browser.i18n.getMessage('th')});
+    document.getElementsByClassName('de').each(element => {element.textContent = browser.i18n.getMessage('de')});
+    document.getElementsByClassName('ru').each(element => {element.textContent = browser.i18n.getMessage('ru')});
+    document.getElementsByClassName('es').each(element => {element.textContent = browser.i18n.getMessage('es')});
+    document.getElementsByClassName('it').each(element => {element.textContent = browser.i18n.getMessage('it')});
+    document.getElementsByClassName('fr').each(element => {element.textContent = browser.i18n.getMessage('fr')});
+
+    copyButton.textContent = browser.i18n.getMessage('copy');
   });
-  
-  document.body.appendChild(container);
 
   return container;
 }
@@ -248,6 +266,7 @@ function loading(bool) {
   }
 }
 
+// TODO: Add caching for last few searches
 function setResult() {
   let target = document.getElementById('papagoExt-language-target');
 
@@ -274,8 +293,8 @@ function copyText() {
 
 function copied(copyButton) {
   let div = document.createElement('div');
-  div.textContent = "Copied!";
-  div.style = 'animation: fade 2s ease-in;';
+  div.textContent = browser.i18n.getMessage('copied');
+  div.style = 'transform: translateX(15px); animation: fade 2s ease-in;';
 
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
