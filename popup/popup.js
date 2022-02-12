@@ -1,31 +1,9 @@
 // Constants
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
 
-// TODO Check for options first. They supercede any 'previous search' config
+
 document.addEventListener('DOMContentLoaded', () => {
-  browser.storage.local.get(['defFont', 'defTheme'], config => {
-    let defFont = config.defFont ? config.defFont : 'Tahoma';
-    let defTheme = config.defTheme ? config.defTheme : 'auto';
-
-    // Set font
-    document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
-
-    // Set theme 
-    if (defTheme == 'auto') {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        // Light mode
-        document.documentElement.classList.add('light');
-      } else {
-        // Dark mode
-        document.documentElement.classList.add('dark');
-      }
-    } else if (defTheme == 'light') {
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  });
-
+  // Set event listeners
   let source = document.getElementById('language-source');
   source.addEventListener('change', onSourceChange);
 
@@ -55,17 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let openNaver = document.getElementById('openNaver');
   openNaver.addEventListener('click', openNaverSite);
-})
 
-// TODO Add locale support for source/target languages (for loop that sets each option.text)
-// TODO Do not need to separate DOMContentLoaded from load unless waiting for stylesheets, scripts, etc.
-// TODO Only need to access local storage once at document load. Set global variables?
-window.addEventListener('load', () => {
-  browser.storage.local.get(['rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult'], config => {
+  // Load stored settings
+  browser.storage.local.get(['defFont', 'defTheme', 'rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult'], config => {
+    let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
+    let defTheme = config.defTheme ? config.defTheme : 'auto';
+
+    // Set font
+    document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
+
+    // Set theme 
+    if (defTheme == 'auto') {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        // Light mode
+        document.documentElement.classList.add('light');
+      } else {
+        // Dark mode
+        document.documentElement.classList.add('dark');
+      }
+    } else if (defTheme == 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Restore last session or set up default settings
     if (config.rememberLast != false) {
       // DOM is already in default settings if there is no stored config
       if (!config.source || !config.target) return;
 
+      // Restore last session
       let source = document.getElementById('language-source');
       source.value = config.source;
       swapCheck();
@@ -80,15 +77,42 @@ window.addEventListener('load', () => {
       let result = document.getElementById('result-text');
       if (config.lastResult) result.value = config.lastResult;
     } else {
+      // Using desired target language
       let target = document.getElementById('language-target');
       if (config.defTargetLang) target.value = config.defTargetLang;
+      honorificCheck(target.value);
     }
-  })
+  });
+
+  // Locales
+  document.getElementsByClassName('auto').each(element => {element.textContent = browser.i18n.getMessage('auto')});
+  document.getElementsByClassName('en').each(element => {element.textContent = browser.i18n.getMessage('en')});
+  document.getElementsByClassName('ko').each(element => {element.textContent = browser.i18n.getMessage('ko')});
+  document.getElementsByClassName('ja').each(element => {element.textContent = browser.i18n.getMessage('ja')});
+  document.getElementsByClassName('zh-CN').each(element => {element.textContent = browser.i18n.getMessage('zh_CN')});
+  document.getElementsByClassName('zh-TW').each(element => {element.textContent = browser.i18n.getMessage('zh_TW')});
+  document.getElementsByClassName('vi').each(element => {element.textContent = browser.i18n.getMessage('vi')});
+  document.getElementsByClassName('id').each(element => {element.textContent = browser.i18n.getMessage('id')});
+  document.getElementsByClassName('th').each(element => {element.textContent = browser.i18n.getMessage('th')});
+  document.getElementsByClassName('de').each(element => {element.textContent = browser.i18n.getMessage('de')});
+  document.getElementsByClassName('ru').each(element => {element.textContent = browser.i18n.getMessage('ru')});
+  document.getElementsByClassName('es').each(element => {element.textContent = browser.i18n.getMessage('es')});
+  document.getElementsByClassName('it').each(element => {element.textContent = browser.i18n.getMessage('it')});
+  document.getElementsByClassName('fr').each(element => {element.textContent = browser.i18n.getMessage('fr')});
+
+  clearButton.textContent = browser.i18n.getMessage('clear');
+  document.getElementById('honorific').textContent = browser.i18n.getMessage('honorific');
+  transButton.textContent = browser.i18n.getMessage('translate');
+  copyButton.textContent = browser.i18n.getMessage('copy');
+  transPage.textContent = browser.i18n.getMessage('translate_this_page');
+  settings.textContent = browser.i18n.getMessage('settings');
+  openNaver.textContent = browser.i18n.getMessage('open_in_papago');
 })
 
 function onSourceChange() {
   swapCheck();
 
+  // Reset "auto" option
   let source = this;
   source.options[0].textContent = browser.i18n.getMessage('auto');
 
@@ -98,8 +122,6 @@ function onSourceChange() {
     target.value = source.value == 'en' ? 'ko' : 'en';
     honorificCheck(target.value);
   }
-
-  storeConfig();
 }
 
 function onTargetChange() {
@@ -114,10 +136,9 @@ function onTargetChange() {
   }
 
   honorificCheck(target.value);
-  storeConfig();
 }
 
-// TODO Add caching for a few last results
+// TODO: Add caching for a few last results
 function translateText() {
   let text = document.getElementById('input-text');
   if (!text.value) return;
@@ -217,7 +238,6 @@ function swapLangs(event) {
   [text.value, result.value] = [result.value, text.value];
 
   honorificCheck(target.value);
-  storeConfig();
 }
 
 function clearText() {
@@ -290,7 +310,7 @@ function swapCheck() {
 function honorificCheck(target) {
   let honorific = document.getElementById('honorific');
   if (target == 'ko') {
-    honorific.style.display = 'inherit';
+    honorific.style.display = 'flex';
   } else {
     honorific.style.display = 'none';
   }
@@ -329,8 +349,8 @@ function loading(bool) {
 
 function copied() {
   let div = document.createElement('div');
-  div.textContent = "- Copied!";
-  div.style = 'position: absolute; left: 50%; transform: translateX(50%); animation: fade 2s ease-in;';
+  div.textContent = "- " + browser.i18n.getMessage('copied');
+  div.style = 'position: absolute; left: 50%; transform: translateX(50%) translateY(2px); animation: fade 2s ease-in;';
 
   let copyButton = document.getElementById('copy-button');
   copyButton.parentElement.insertBefore(div, copyButton);
