@@ -65,5 +65,37 @@
 
 	"detected": {
 		"message": "Detected"
+	},
+
+	"clear": {
+		"message": "Clear"
+	},
+
+	"honorific": {
+		"message": "Honorific"
+	},
+
+	"translate": {
+		"message": "Translate"
+	},
+
+	"copy": {
+		"message": "Copy"
+	},
+
+	"copied": {
+		"message": "Copied!"
+	},
+
+	"translate_this_page": {
+		"message": "Translate this Page"
+	},
+
+	"settings": {
+		"message": "Settings"
+	},
+
+	"open_in_papago": {
+		"message": "Open in Papago"
 	}
 }
