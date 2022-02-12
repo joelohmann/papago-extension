@@ -97,5 +97,85 @@
 
 	"open_in_papago": {
 		"message": "Open in Papago"
+	},
+
+	"translation_defaults": {
+		"message": "Translation Defaults"
+	},
+
+	"remember_last": {
+		"message": "Remember last search"
+	},
+
+	"use_default": {
+		"message": "Use default translation settings instead"
+	},
+
+	"default_target": {
+		"message": "Default target language"
+	},
+
+	"default_font": {
+		"message": "Default target language"
+	},
+
+	"default": {
+		"message": "Default"
+	},
+
+	"default_theme": {
+		"message": "Default theme"
+	},
+
+	"auto_detect": {
+		"message": "Auto Detect"
+	},
+
+	"light": {
+		"message": "Light"
+	},
+
+	"dark": {
+		"message": "Dark"
+	},
+
+	"popup_options": {
+		"message": "Popup Options"
+	},
+
+	"use_popup": {
+		"message": "Use popup"
+	},
+
+	"phrase_select": {
+		"message": "Choose how to select text for translation"
+	},
+
+	"drag": {
+		"message": "Drag"
+	},
+
+	"ctrl_drag": {
+		"message": "Ctrl + Drag"
+	},
+
+	"alt_drag": {
+		"message": "Alt + Drag"
+	},
+
+	"popup_behavior": {
+		"message": "Popup Behavior"
+	},
+
+	"popup_display_icon": {
+		"message": "Click on icon to show translation results"
+	},
+
+	"popup_display_instant": {
+		"message": "Display translation results immediately after selecting"
+	},
+
+	"footer": {
+		"message": "Changes will be applied after refreshing any open pages"
 	}
 }
