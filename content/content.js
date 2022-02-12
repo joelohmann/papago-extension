@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
 
-    usePopup = config.usePopup ? config.usePopup : true;
+    usePopup = (config.usePopup !== undefined) ? config.usePopup : true;
     phraseSelect = config.phraseSelect ? config.phraseSelect : 'drag';
     popupBehavior = config.popupBehavior ? config.popupBehavior : 'icon';
 
@@ -112,12 +112,11 @@ function selectionChange() {
   }
 }
 
-// TODO: Stress test this
 function keyDown(event) {
   if (phraseSelect !== 'drag') {
-    if (phraseSelect === 'alt-drag' && event.altKey) {
+    if (phraseSelect === 'alt-drag' && event.keyCode === 18) {
       keyPressed = true;
-    } else if (phraseSelect === 'ctrl-drag' && event.ctrlKey) {
+    } else if (phraseSelect === 'ctrl-drag' && event.keyCode === 17) {
       keyPressed = true;
     } else {
       keyPressed = false;
@@ -126,9 +125,9 @@ function keyDown(event) {
 }
 
 function keyUp(event) {
-  if (phraseSelect === 'alt-drag' && event.altKey) {
+  if (phraseSelect === 'alt-drag' && event.keyCode === 18) {
     keyPressed = false;
-  } else if (phraseSelect === 'ctrl-drag' && event.ctrlKey) {
+  } else if (phraseSelect === 'ctrl-drag' && event.keyCode === 17) {
     keyPressed = false;
   }
 }
