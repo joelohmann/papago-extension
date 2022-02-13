@@ -71,11 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
       target.value = config.target;
       honorificCheck(target.value);
 
-      let text = document.getElementById('input-text');
-      if (config.lastSearch) text.value = config.lastSearch;
+      if (config.lastSearch) {
+        let text = document.getElementById('input-text');
+        text.value = config.lastSearch;
+      }
 
-      let result = document.getElementById('result-text');
-      if (config.lastResult) result.value = config.lastResult;
+      if (config.lastResult) {
+        let result = document.getElementById('result-text');
+        result.value = config.lastResult;
+      }
     } else {
       // Using desired target language
       let target = document.getElementById('language-target');
@@ -85,44 +89,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Locales
-  console.log("starting");
+  document.getElementById('source-auto').textContent = browser.i18n.getMessage('auto');
+  document.getElementById('source-en').textContent = browser.i18n.getMessage('en');
+  document.getElementById('source-ko').textContent = browser.i18n.getMessage('ko');
+  document.getElementById('source-ja').textContent = browser.i18n.getMessage('ja');
+  document.getElementById('source-zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+  document.getElementById('source-zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+  document.getElementById('source-vi').textContent = browser.i18n.getMessage('vi');
+  document.getElementById('source-id').textContent = browser.i18n.getMessage('id');
+  document.getElementById('source-th').textContent = browser.i18n.getMessage('th');
+  document.getElementById('source-de').textContent = browser.i18n.getMessage('de');
+  document.getElementById('source-ru').textContent = browser.i18n.getMessage('ru');
+  document.getElementById('source-es').textContent = browser.i18n.getMessage('es');
+  document.getElementById('source-it').textContent = browser.i18n.getMessage('it');
+  document.getElementById('source-fr').textContent = browser.i18n.getMessage('fr');
 
-  let classElements = [];
-  classElements.push(
-    document.getElementsByClassName('auto'),
-    document.getElementsByClassName('en'),
-    document.getElementsByClassName('ko'),
-    document.getElementsByClassName('ja'),
-    document.getElementsByClassName('zh-CN'),
-    document.getElementsByClassName('zh-TW'),
-    document.getElementsByClassName('vi'),
-    document.getElementsByClassName('id'),
-    document.getElementsByClassName('th'),
-    document.getElementsByClassName('de'),
-    document.getElementsByClassName('ru'),
-    document.getElementsByClassName('es'),
-    document.getElementsByClassName('it'),
-    document.getElementsByClassName('fr')
-  );
-
-  // TODO: Fix this https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByClassName
-  for (let i=0; i<classElements.length; i++) {
-    for (let j=0; j<classElements[i].length; j++) {
-      classElements.item(i).classList.add('hueframe');
-    }
-  }
-
-  console.log("after classes");
+  document.getElementById('target-en').textContent = browser.i18n.getMessage('en');
+  document.getElementById('target-ko').textContent = browser.i18n.getMessage('ko');
+  document.getElementById('target-ja').textContent = browser.i18n.getMessage('ja');
+  document.getElementById('target-zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+  document.getElementById('target-zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+  document.getElementById('target-vi').textContent = browser.i18n.getMessage('vi');
+  document.getElementById('target-id').textContent = browser.i18n.getMessage('id');
+  document.getElementById('target-th').textContent = browser.i18n.getMessage('th');
+  document.getElementById('target-de').textContent = browser.i18n.getMessage('de');
+  document.getElementById('target-ru').textContent = browser.i18n.getMessage('ru');
+  document.getElementById('target-es').textContent = browser.i18n.getMessage('es');
+  document.getElementById('target-it').textContent = browser.i18n.getMessage('it');
+  document.getElementById('target-fr').textContent = browser.i18n.getMessage('fr');
 
   clearButton.textContent = browser.i18n.getMessage('clear');
   document.getElementById('honorific').textContent = browser.i18n.getMessage('honorific');
   transButton.textContent = browser.i18n.getMessage('translate');
   copyButton.textContent = browser.i18n.getMessage('copy');
+
   transPage.textContent = browser.i18n.getMessage('translate_this_page');
   settings.textContent = browser.i18n.getMessage('settings');
   openNaver.textContent = browser.i18n.getMessage('open_in_papago');
 
-  console.log("finished");
+  console.log("finished")
 })
 
 function onSourceChange() {
