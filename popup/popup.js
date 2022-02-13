@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Locales
+  // TODO: forEach, not each
   document.getElementsByClassName('auto').each(element => {element.textContent = browser.i18n.getMessage('auto')});
   document.getElementsByClassName('en').each(element => {element.textContent = browser.i18n.getMessage('en')});
   document.getElementsByClassName('ko').each(element => {element.textContent = browser.i18n.getMessage('ko')});
