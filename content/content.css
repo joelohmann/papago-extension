@@ -52,6 +52,7 @@
 
 .papagoExt-bordered {
   margin: 0 0 5px 0;
+  padding: 2px;
   border-radius: 0.25rem;
   transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -68,7 +69,6 @@
   cursor: pointer;
   text-align: center;
   line-height: 22px;
-  width: 45px;
   height: 22px;
 }
 
