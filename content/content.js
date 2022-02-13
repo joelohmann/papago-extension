@@ -167,19 +167,19 @@ function createPopup() {
     copyButton.addEventListener('click', copyText);
 
     // Locales
-    document.getElementsByClassName('en').each(element => {element.textContent = browser.i18n.getMessage('en')});
-    document.getElementsByClassName('ko').each(element => {element.textContent = browser.i18n.getMessage('ko')});
-    document.getElementsByClassName('ja').each(element => {element.textContent = browser.i18n.getMessage('ja')});
-    document.getElementsByClassName('zh-CN').each(element => {element.textContent = browser.i18n.getMessage('zh_CN')});
-    document.getElementsByClassName('zh-TW').each(element => {element.textContent = browser.i18n.getMessage('zh_TW')});
-    document.getElementsByClassName('vi').each(element => {element.textContent = browser.i18n.getMessage('vi')});
-    document.getElementsByClassName('id').each(element => {element.textContent = browser.i18n.getMessage('id')});
-    document.getElementsByClassName('th').each(element => {element.textContent = browser.i18n.getMessage('th')});
-    document.getElementsByClassName('de').each(element => {element.textContent = browser.i18n.getMessage('de')});
-    document.getElementsByClassName('ru').each(element => {element.textContent = browser.i18n.getMessage('ru')});
-    document.getElementsByClassName('es').each(element => {element.textContent = browser.i18n.getMessage('es')});
-    document.getElementsByClassName('it').each(element => {element.textContent = browser.i18n.getMessage('it')});
-    document.getElementsByClassName('fr').each(element => {element.textContent = browser.i18n.getMessage('fr')});
+    document.getElementById('en').textContent = browser.i18n.getMessage('en');
+    document.getElementById('ko').textContent = browser.i18n.getMessage('ko');
+    document.getElementById('ja').textContent = browser.i18n.getMessage('ja');
+    document.getElementById('zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+    document.getElementById('zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+    document.getElementById('vi').textContent = browser.i18n.getMessage('vi');
+    document.getElementById('id').textContent = browser.i18n.getMessage('id');
+    document.getElementById('th').textContent = browser.i18n.getMessage('th');
+    document.getElementById('de').textContent = browser.i18n.getMessage('de');
+    document.getElementById('ru').textContent = browser.i18n.getMessage('ru');
+    document.getElementById('es').textContent = browser.i18n.getMessage('es');
+    document.getElementById('it').textContent = browser.i18n.getMessage('it');
+    document.getElementById('fr').textContent = browser.i18n.getMessage('fr');
 
     copyButton.textContent = browser.i18n.getMessage('copy');
   });
