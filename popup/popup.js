@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('target-fr').textContent = browser.i18n.getMessage('fr');
 
   clearButton.textContent = browser.i18n.getMessage('clear');
-  document.getElementById('honorific').textContent = browser.i18n.getMessage('honorific');
+  document.getElementById('honorific-label').textContent = browser.i18n.getMessage('honorific');
   transButton.textContent = browser.i18n.getMessage('translate');
   copyButton.textContent = browser.i18n.getMessage('copy');
 
