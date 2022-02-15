@@ -10,7 +10,7 @@ var usePopup, phraseSelect, popupBehavior;
 var dragging = false;
 var selectionReady = false;
 var keyPressed = false;
-var selection;
+var selection, selectedText;
 
 var icon, popup;
 
@@ -82,35 +82,23 @@ function mouseUp(event) {
 // TODO: Hide icon if selection changes and mouse is not held (highlight and delete, for example. Or random site bs)
 function selectionChange() {
   let tempSelection = window.getSelection();
-  let text = tempSelection.toString();
+  let tempText = tempSelection.toString();
 
-  if (text.length > 0 && !SELECTION_CHECK.test(text)) {
-    if (phraseSelect === 'drag') {
-      // Selection check passed: store selection
-      selection = tempSelection;
-
+  if (tempText.length > 0 && !SELECTION_CHECK.test(tempText)) {
+    if (phraseSelect === 'drag' || keyPressed) {
       if (dragging) {
+        // Selection check passed: store selection
+        selection = window.getSelection();
+        selectedText = selection.toString();
+
         // Mouse is held down. Pass showing icon/popup to mouseup event
         selectionReady = true;
+        return;
       } 
-    } else if (keyPressed) {
-      // Selection check passed and dragging key pressed: store selection
-      selection = tempSelection;
-
-      if (dragging) {
-        selectionReady = true;
-      }
-    } else {
-      // Dragging key is not pressed: do not store selection
-      selection = null;
-      selectionReady = false;
     }
-    // settimeout
-  } else {
-    // Selection check failed: don't store selection
-    selection = null;
-    selectionReady = false;
   }
+  // Selection check failed or drag condition wasn't met
+  selectionReady = false;
 }
 
 function keyDown(event) {
@@ -211,6 +199,8 @@ function showIcon(event) {
   icon.style.top = top + "px";
   icon.style.left = left + "px";
   icon.style.display = 'block';
+
+  setTimeout(() => {icon.style.display = 'none'}, 20000);
 }
 
 // Add and remove from DOM instead of changing display? 
@@ -270,11 +260,12 @@ function loading(bool) {
 }
 
 function setResult() {
+  console.log("setResult", selectedText);
   let target = document.getElementById('papagoExt-language-target');
 
   loading(true);
 
-  sendTranslate(target.value, selection.toString())
+  sendTranslate(target.value, selectedText)
   .then(res => {
     let result = document.getElementById('papagoExt-result-text');
     result.value = res.message.result.translatedText;
