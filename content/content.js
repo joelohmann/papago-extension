@@ -269,7 +269,6 @@ function loading(bool) {
   }
 }
 
-// TODO: Add caching for last few searches
 function setResult() {
   let target = document.getElementById('papagoExt-language-target');
 

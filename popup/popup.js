@@ -157,7 +157,6 @@ function onTargetChange() {
   honorificCheck(target.value);
 }
 
-// TODO: Add caching for a few last results
 function translateText() {
   let text = document.getElementById('input-text');
   if (!text.value) return;
