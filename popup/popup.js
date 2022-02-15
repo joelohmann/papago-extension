@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
   transPage.textContent = browser.i18n.getMessage('translate_this_page');
   settings.textContent = browser.i18n.getMessage('settings');
   openNaver.textContent = browser.i18n.getMessage('open_in_papago');
-
-  console.log("finished")
 })
 
 function onSourceChange() {
@@ -242,6 +240,8 @@ async function sendTranslate(sourceLang, targetLang, text, honorific) {
 function swapLangs(event) {
   let source = document.getElementById('language-source');
   let target = document.getElementById('language-target');
+  let text = document.getElementById('input-text');
+  let result = document.getElementById('result-text');
 
   if (source.value == 'auto') {
     if (source.detectedLang) {
@@ -249,14 +249,13 @@ function swapLangs(event) {
       [source.value, target.value] = [target.value, source.detectedLang]
 
       source.options[0].textContent = browser.i18n.getMessage('auto');
+
+      [text.value, result.value] = [result.value, text.value];
     }
   } else {
     [source.value, target.value] = [target.value, source.value];
+    [text.value, result.value] = [result.value, text.value];
   }
-
-  let text = document.getElementById('input-text');
-  let result = document.getElementById('result-text');
-  [text.value, result.value] = [result.value, text.value];
 
   honorificCheck(target.value);
 }
