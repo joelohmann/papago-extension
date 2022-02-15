@@ -1,6 +1,7 @@
 // Constants
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
+const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
 
 // Options variables
 var usePopup, phraseSelect, popupBehavior;
@@ -162,6 +163,9 @@ function createPopup() {
   
     let target = document.getElementById('papagoExt-language-target');
     target.addEventListener('change', setResult);
+    if (LANGS.includes(navigator.language.substring(0, 2))) {
+      target.value = navigator.language.substring(0, 2);
+    }
 
     let copyButton = document.getElementById('papagoExt-copy-button');
     copyButton.addEventListener('click', copyText);
