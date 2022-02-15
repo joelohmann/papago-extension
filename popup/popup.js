@@ -128,36 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
   openNaver.textContent = browser.i18n.getMessage('open_in_papago');
 })
 
-function onSourceChange() {
+function onSourceChange(event) {
   swapCheck();
 
   // Reset "auto" option
-  let source = this;
+  let source = event.target;
   source.options[0].textContent = browser.i18n.getMessage('auto');
 
   // Cannot choose a source that is the same as the target
   let target = document.getElementById('language-target');
   if (source.value == target.value) {
-    target.value = source.value == 'en' ? 'ko' : 'en';
+    target.value = source.value != 'en' ? 'en' : 'ko';
     honorificCheck(target.value);
   }
 }
 
-function onTargetChange() {
-  let target = this;
+function onTargetChange(event) {
+  let target = event.target;
   let source = document.getElementById('language-source');
 
   // Cannot choose a target that is the same as the source, even if the source is "auto - detected"
   if (source.value == target.value) {
-    source.value = target.value == 'en' ? 'ko' : 'en';
+    source.value = target.value != 'en' ? 'en' : 'ko';
   } else if (source.detectedLang == target.value) {
-    target.value = source.detectedLang == 'en' ? 'ko' : 'en';
+    target.value = source.detectedLang != 'en' ? 'en' : 'ko';
   }
 
-  honorificCheck(target.value);
+  honorificCheck(target.value);  
 }
 
-function translateText() {
+function translateText(event) {
   let text = document.getElementById('input-text');
   if (!text.value) return;
 
@@ -248,18 +248,19 @@ function swapLangs(event) {
       [source.value, target.value] = [target.value, source.detectedLang]
 
       source.options[0].textContent = browser.i18n.getMessage('auto');
-
-      [text.value, result.value] = [result.value, text.value];
     }
   } else {
     [source.value, target.value] = [target.value, source.value];
+  }
+
+  if (result.value) {
     [text.value, result.value] = [result.value, text.value];
   }
 
   honorificCheck(target.value);
 }
 
-function clearText() {
+function clearText(event) {
   let text = document.getElementById('input-text');
   let result = document.getElementById('result-text');
 
@@ -267,13 +268,13 @@ function clearText() {
   storeConfig();
 }
 
-function copyText() {
+function copyText(event) {
   let result = document.getElementById('result-text');
   navigator.clipboard.writeText(result.value);
   copied();
 }
 
-function honorificToggle() {
+function honorificToggle(event) {
   let honorButton = document.getElementById('honorific-button');
 
   if (honorButton.className.includes('on')) {
@@ -283,7 +284,7 @@ function honorificToggle() {
   }
 }
 
-function translatePage() {
+function translatePage(event) {
   let source = document.getElementById('language-source');
   let target = document.getElementById('language-target');
 
