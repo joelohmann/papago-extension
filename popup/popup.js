@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
   transPage.textContent = browser.i18n.getMessage('translate_this_page');
   settings.textContent = browser.i18n.getMessage('settings');
   openNaver.textContent = browser.i18n.getMessage('open_in_papago');
-
-  console.log("finished")
 })
 
 function onSourceChange() {
