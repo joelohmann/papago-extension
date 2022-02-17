@@ -170,6 +170,7 @@ function translateText(event) {
   // Check if language detection API needs to be used prior to translation.
   let source = document.getElementById('language-source');
   let target = document.getElementById('language-target');
+  let result = document.getElementById('result-text');
   if (source.value == 'auto') {
     loading(true);
 
@@ -178,7 +179,6 @@ function translateText(event) {
         source.options[source.selectedIndex].textContent = `${browser.i18n.getMessage('detected')} - ${browser.i18n.getMessage(response.message.result.srcLangType.replace('-', '_'))}`;
         source.detectedLang = response.message.result.srcLangType;
 
-        let result = document.getElementById('result-text');
         result.value = response.message.result.translatedText;
 
         let swapButton = document.getElementById('swap-button');
@@ -192,19 +192,24 @@ function translateText(event) {
         loading(false);
         storeConfig();
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        result.value = err.message;
+        loading(false);
+      });
   } else {
     loading(true);
 
     sendTranslate(source.value, target.value, text.value.trim(), honorific)
       .then(response => {
-        let result = document.getElementById('result-text');
         result.value = response.message.result.translatedText;
 
         loading(false);
         storeConfig();
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        result.value = err.message;
+        loading(false);
+      });
   }
 }
 

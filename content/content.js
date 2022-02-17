@@ -260,20 +260,23 @@ function loading(bool) {
 }
 
 function setResult() {
-  console.log("setResult", selectedText);
   let target = document.getElementById('papagoExt-language-target');
+  let result = document.getElementById('papagoExt-result-text');
 
   loading(true);
 
   sendTranslate(target.value, selectedText)
   .then(res => {
-    let result = document.getElementById('papagoExt-result-text');
     result.value = res.message.result.translatedText;
 
     if (res.message.result.tarLangType !== target.value) {
       target.value = res.message.result.tarLangType;
     }
 
+    loading(false);
+  })
+  .catch(err => {
+    result.value = err.message;
     loading(false);
   });
 }
