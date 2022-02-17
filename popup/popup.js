@@ -372,6 +372,7 @@ function loading(bool) {
   }
 }
 
+// TODO: Make this work without absolute. Locales don't look as good
 function copied() {
   let div = document.createElement('div');
   div.textContent = "- " + browser.i18n.getMessage('copied');

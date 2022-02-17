@@ -290,7 +290,7 @@ function copyText() {
 function copied(copyButton) {
   let div = document.createElement('div');
   div.textContent = browser.i18n.getMessage('copied');
-  div.style = 'transform: translateX(15px); animation: fade 2s ease-in;';
+  div.style = 'overflow: hidden; transform: translateX(15px); animation: fade 2s ease-in;';
 
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
