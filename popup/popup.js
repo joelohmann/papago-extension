@@ -217,11 +217,7 @@ function translateText(event) {
 async function sendDetect(targetLang, text, honorific) {
   return browser.runtime.sendMessage({
     action: 'detect',
-    detectBody: {
-      'query': text
-    },
     body: {
-      'source': "",
       'target': targetLang,
       'text': text,
       'honorific': honorific

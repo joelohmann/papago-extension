@@ -259,6 +259,8 @@ function loading(bool) {
   }
 }
 
+// TODO: Send translate request instead of detection if the selection 
+// hasn't changed and we know the source language already.
 function setResult() {
   let target = document.getElementById('papagoExt-language-target');
   let result = document.getElementById('papagoExt-result-text');
@@ -300,11 +302,7 @@ function copied(copyButton) {
 async function sendTranslate(targetLang, text) {
   return browser.runtime.sendMessage({
     action: 'detect',
-    detectBody: {
-      'query': text
-    },
     body: {
-      'source': "",
       'target': targetLang,
       'text': text,
       'honorific': true
