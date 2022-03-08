@@ -56,17 +56,8 @@ async function call(url, body) {
 	}
 }
 
-async function detect(request) {
-	let response = await call("https://papago-extension.herokuapp.com/api/v1/detect", request.detectBody);
-
-	request.body['source'] = response.langCode;
-
-	// If detected language is the same as the source, then change target to either English or Korean
-	if (response.langCode == request.body.target) {
-		request.body.target = response.langCode != 'en' ? 'en' : 'ko';
-	}
-
-	return translate(request)
+function detect(request) {
+	return call("https://papago-extension.herokuapp.com/api/v1/detect", request.body);
 }
 
 function translate(request) {
