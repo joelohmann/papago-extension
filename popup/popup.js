@@ -176,6 +176,8 @@ function translateText(event) {
 
     sendDetect(target.value, text.value.trim(), honorific)
       .then(response => {
+        if (!response.message) throw new Error(response);
+
         source.options[source.selectedIndex].textContent = `${browser.i18n.getMessage('detected')} - ${browser.i18n.getMessage(response.message.result.srcLangType.replace('-', '_'))}`;
         source.detectedLang = response.message.result.srcLangType;
 
@@ -201,6 +203,8 @@ function translateText(event) {
 
     sendTranslate(source.value, target.value, text.value.trim(), honorific)
       .then(response => {
+        if (!response.message) throw new Error(response);
+
         result.value = response.message.result.translatedText;
 
         loading(false);
@@ -217,23 +221,14 @@ function translateText(event) {
 async function sendDetect(targetLang, text, honorific) {
   return browser.runtime.sendMessage({
     action: 'detect',
-    body: {
-      'target': targetLang,
-      'text': text,
-      'honorific': honorific
-    }
+    query: `target=${targetLang}&text=${text}&honorific=${honorific}`
   })
 }
 
 async function sendTranslate(sourceLang, targetLang, text, honorific) {
   return browser.runtime.sendMessage({
     action: 'translate',
-    body: {
-      'source': sourceLang,
-      'target': targetLang,
-      'text': text,
-      'honorific': honorific
-    }
+    query: `source=${sourceLang}&target=${targetLang}&text=${text}&honorific=${honorific}`
   })
 }
 
