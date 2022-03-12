@@ -1,15 +1,15 @@
-browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {		
 	browser.storage.local.get(['cache'], items => {
 		// Check the cache first
-		if (items.cache) {
-			// Search cache
-			let cached = items.cache.find(obj => JSON.stringify(obj.request) == JSON.stringify(request));
-			if (cached) {
-				// Request is cached
-				sendResponse(cached.response);
-				return;
-			}
-		}
+		// if (items.cache) {
+		// 	// Search cache
+		// 	let cached = items.cache.find(obj => JSON.stringify(obj.request) == JSON.stringify(request));
+		// 	if (cached) {
+		// 		// Request is cached
+		// 		sendResponse(cached.response);
+		// 		return;
+		// 	}
+		// }
 
 		// Request not in cache
 		// Clone original request
@@ -40,28 +40,22 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	return true;
 });
 
-async function call(url, body) {
-	let response = await fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(body)
-	});
-	if (response.status == 200) {
-		let message = await response.json();
-		return message;
-	} else {
-		throw response.message;
+async function call(url) {
+	try {
+		let response = await fetch(url);
+
+		return await response.json();
+	} catch (err) {
+		throw err;
 	}
 }
 
 function detect(request) {
-	return call("https://papago-extension.herokuapp.com/api/v1/detect", request.body);
+	return call("https://papago-extension.herokuapp.com/api/v1/detect?" + request.query);
 }
 
 function translate(request) {
-	return call("https://papago-extension.herokuapp.com/api/v1/translate", request.body)
+	return call("https://papago-extension.herokuapp.com/api/v1/translate?" + request.query)
 }
 
 function storeCache(cache, request, response) {
