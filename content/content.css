@@ -58,6 +58,9 @@
 }
 
 #papagoExt-language-target {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
   cursor: pointer;
   appearance: auto;
   line-height: 22px;
@@ -75,6 +78,7 @@
 #papagoExt-result-text {
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
   box-sizing: border-box;
   width: 100%;
   margin: 0;
