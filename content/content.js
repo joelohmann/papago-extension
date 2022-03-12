@@ -15,6 +15,7 @@ var selection, selectedText;
 var icon, popup;
 
 
+// TODO: Add default target language setting to popup init
 document.addEventListener('DOMContentLoaded', () => {
   browser.storage.local.get(['defFont', 'defTheme', 'usePopup', 'phraseSelect', 'popupBehavior'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If popup is disabled, then nothing will happen to the page
     if (usePopup) {
+      // TODO: Check if been created already (DOMContentLoaded firing twice problem)
       icon = createIcon();
       popup = createPopup();
 
@@ -268,11 +270,13 @@ function setResult() {
   loading(true);
 
   sendTranslate(target.value, selectedText)
-  .then(res => {
-    result.value = res.message.result.translatedText;
+  .then(response => {
+    if (!response.message) throw new Error(response);
 
-    if (res.message.result.tarLangType !== target.value) {
-      target.value = res.message.result.tarLangType;
+    result.value = response.message.result.translatedText;
+
+    if (response.message.result.tarLangType !== target.value) {
+      target.value = response.message.result.tarLangType;
     }
 
     loading(false);
@@ -302,11 +306,7 @@ function copied(copyButton) {
 async function sendTranslate(targetLang, text) {
   return browser.runtime.sendMessage({
     action: 'detect',
-    body: {
-      'target': targetLang,
-      'text': text,
-      'honorific': true
-    }
+    query: `target=${targetLang}&text=${text}&honorific=true`
   })
 }
 
