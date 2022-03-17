@@ -1,5 +1,5 @@
 /* Prevent sites from overriding custom styling */
-.papagoExt-popup * {
+.papagoExt-inline * {
   all: initial;
   font-family: inherit;
   font-size: inherit;
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.papagoExt-popup {
+.papagoExt-inline {
   font-size: 16px;
   box-sizing: border-box;
   display: none;
@@ -131,43 +131,43 @@
 }
 
 /* Light mode */
-.papagoExt-popup.light {
+.papagoExt-inline.light {
   background-color: #fff;
   color: #333;
   border-color: #bbb;
 }
 
-.papagoExt-popup.light .papagoExt-bordered {
+.papagoExt-inline.light .papagoExt-bordered {
   background-color: #fafafa;
   border: 1px solid #dcdcdc;
 }
 
-.papagoExt-popup.light #papagoExt-result-text {
+.papagoExt-inline.light #papagoExt-result-text {
   background-color: #fff;
 }
 
-.papagoExt-popup.light #papagoExt-language-target:hover,
-.papagoExt-popup.light #papagoExt-copy-button:hover {
+.papagoExt-inline.light #papagoExt-language-target:hover,
+.papagoExt-inline.light #papagoExt-copy-button:hover {
   background-color: #c9c9c9;
 }
 
 /* Dark mode */
-.papagoExt-popup.dark {
+.papagoExt-inline.dark {
   background-color: #323232;
   color: #ebebeb;
 }
 
-.papagoExt-popup.dark .papagoExt-bordered {
+.papagoExt-inline.dark .papagoExt-bordered {
   background-color: #484848;
   border: 1px solid #595959;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.papagoExt-popup.dark #papagoExt-result-text {
+.papagoExt-inline.dark #papagoExt-result-text {
   background-color: #323232;
 }
 
-.papagoExt-popup.dark #papagoExt-language-target:hover,
-.papagoExt-popup.dark #papagoExt-copy-button:hover {
+.papagoExt-inline.dark #papagoExt-language-target:hover,
+.papagoExt-inline.dark #papagoExt-copy-button:hover {
   background-color: #383838;
 }

@@ -139,11 +139,11 @@
 		"message": "밝은 모드"
 	},
 
-	"popup_options": {
-		"message": "팝업 옵션"
+	"inline_options": {
+		"message": "인라인 번역 옵션"
 	},
 
-	"use_popup": {
+	"use_inline": {
 		"message": "사용함"
 	},
 
@@ -163,15 +163,15 @@
 		"message": "Alt 키 + 드래그"
 	},
 
-	"popup_behavior": {
-		"message": "팝업 행동"
+	"inline_behavior": {
+		"message": "인라인 번역 행동"
 	},
 
-	"popup_display_icon": {
+	"inline_display_icon": {
 		"message": "벼역 결과를 표시하려면 아이콘을 클릭합니다"
 	},
 
-	"popup_display_instant": {
+	"inline_display_instant": {
 		"message": "선택한 후 바로 번역 결과를 표시합니다"
 	},
 

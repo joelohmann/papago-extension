@@ -139,12 +139,12 @@
 		"message": "Dark"
 	},
 
-	"popup_options": {
-		"message": "Popup Options"
+	"inline_options": {
+		"message": "Inline Translator Options"
 	},
 
-	"use_popup": {
-		"message": "Use popup"
+	"use_inline": {
+		"message": "Use inline translator"
 	},
 
 	"phrase_select": {
@@ -163,15 +163,15 @@
 		"message": "Alt + Drag"
 	},
 
-	"popup_behavior": {
-		"message": "Popup Behavior"
+	"inline_behavior": {
+		"message": "Inline Translator Behavior"
 	},
 
-	"popup_display_icon": {
+	"inline_display_icon": {
 		"message": "Click on icon to show translation results"
 	},
 
-	"popup_display_instant": {
+	"inline_display_instant": {
 		"message": "Display translation results immediately after selecting"
 	},
 

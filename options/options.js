@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
   var defTheme = document.getElementsByName('default-theme')[0];
   defTheme.addEventListener('change', storeConfig);
 
-  var usePopup = document.getElementsByName('use-popup')[0];
-  usePopup.addEventListener('change', storeConfig);
+  var useInline = document.getElementsByName('use-inline')[0];
+  useInline.addEventListener('change', storeConfig);
 
   var phraseSelect = document.getElementsByName('phrase-select')[0];
   phraseSelect.addEventListener('change', storeConfig);
 
   browser.storage.local.get(['rememberLast', 'defTargetLang', 'defFont', 'defTheme', 
-  'usePopup', 'phraseSelect', 'popupBehavior'
+  'useInline', 'phraseSelect', 'inlineBehavior'
   ], config => {
     var useDefaultsList = document.getElementsByName('translation-defaults');
     for (i = 0; i < useDefaultsList.length; i++) {
@@ -32,18 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (config.defTheme != null) defTheme.value = config.defTheme;
 
-    if (config.usePopup != null) {
-      usePopup.checked = config.usePopup;
-      popupDisplay(config.usePopup);
+    if (config.useInline != null) {
+      useInline.checked = config.useInline;
+      inlineDisplay(config.useInline);
     }
 
     if (config.phraseSelect != null) phraseSelect.value = config.phraseSelect;
 
-    var popupDisplaylist = document.getElementsByName('popup-display');
-    for (i = 0; i < popupDisplaylist.length; i++) {
-      popupDisplaylist[i].addEventListener('change', storeConfig);
-      if (config.popupBehavior != null) {
-        popupDisplaylist[i].checked = (popupDisplaylist[i].value == config.popupBehavior);
+    var inlineDisplaylist = document.getElementsByName('inline-display');
+    for (i = 0; i < inlineDisplaylist.length; i++) {
+      inlineDisplaylist[i].addEventListener('change', storeConfig);
+      if (config.inlineBehavior != null) {
+        inlineDisplaylist[i].checked = (inlineDisplaylist[i].value == config.inlineBehavior);
       }
     }
   });
@@ -78,17 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('light').textContent = browser.i18n.getMessage('light');
   document.getElementById('dark').textContent = browser.i18n.getMessage('dark');
 
-  document.getElementById('popup-options-title').textContent = browser.i18n.getMessage('popup_options');
-  document.getElementById('use-popup-label').textContent = browser.i18n.getMessage('use_popup');
+  document.getElementById('inline-options-title').textContent = browser.i18n.getMessage('inline_options');
+  document.getElementById('use-inline-label').textContent = browser.i18n.getMessage('use_inline');
   
   document.getElementById('phrase-select-label').textContent = browser.i18n.getMessage('phrase_select');
   document.getElementById('drag').textContent = browser.i18n.getMessage('drag');
   document.getElementById('ctrl-drag').textContent = browser.i18n.getMessage('ctrl_drag');
   document.getElementById('alt-drag').textContent = browser.i18n.getMessage('alt_drag');
 
-  document.getElementById('popup-behavior-title').textContent = browser.i18n.getMessage('popup_behavior');
-  document.getElementById('popup-display-icon-label').textContent = browser.i18n.getMessage('popup_display_icon');
-  document.getElementById('popup-display-instant-label').textContent = browser.i18n.getMessage('popup_display_instant');
+  document.getElementById('inline-behavior-title').textContent = browser.i18n.getMessage('inline_behavior');
+  document.getElementById('inline-display-icon-label').textContent = browser.i18n.getMessage('inline_display_icon');
+  document.getElementById('inline-display-instant-label').textContent = browser.i18n.getMessage('inline_display_instant');
 
   document.getElementById('footer').textContent = browser.i18n.getMessage('footer');
 });
@@ -114,18 +114,18 @@ function storeConfig(event) {
     }
   }
 
-  var usePopup = document.getElementsByName('use-popup')[0].checked;
-  popupDisplay(usePopup);
-  newConfig['usePopup'] = usePopup;
-  if (usePopup) {
+  var useInline = document.getElementsByName('use-inline')[0].checked;
+  inlineDisplay(useInline);
+  newConfig['useInline'] = useInline;
+  if (useInline) {
     var phraseSelect = document.getElementsByName('phrase-select')[0].value;
     newConfig['phraseSelect'] = phraseSelect;
 
-    var popupDisplayList = document.getElementsByName('popup-display');
-    for (i = 0; i < popupDisplayList.length; i++) {
-      if (popupDisplayList[i].checked) {
-        var popupBehavior = popupDisplayList[i].value;
-        newConfig['popupBehavior'] = popupBehavior;
+    var inlineDisplayList = document.getElementsByName('inline-display');
+    for (i = 0; i < inlineDisplayList.length; i++) {
+      if (inlineDisplayList[i].checked) {
+        var inlineBehavior = inlineDisplayList[i].value;
+        newConfig['inlineBehavior'] = inlineBehavior;
       }
     }
   }
@@ -142,11 +142,11 @@ function translationDisplay(bool) {
   }
 }
 
-function popupDisplay(bool) {
-  var popupOptions = document.getElementById('popup-options');
+function inlineDisplay(bool) {
+  var inlineOptions = document.getElementById('inline-options');
   if (bool) {
-    popupOptions.style.display = 'block';
+    inlineOptions.style.display = 'block';
   } else {
-    popupOptions.style.display = 'none';
+    inlineOptions.style.display = 'none';
   }
 }

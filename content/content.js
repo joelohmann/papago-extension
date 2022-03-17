@@ -4,7 +4,7 @@ const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
 const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
 
 // Options variables
-var usePopup, phraseSelect, popupBehavior;
+var useInline, phraseSelect, inlineBehavior;
 
 // Global variables
 var dragging = false;
@@ -12,24 +12,24 @@ var selectionReady = false;
 var keyPressed = false;
 var selection, selectedText;
 
-var icon, popup;
+var icon, inline;
 
 
-// TODO: Add default target language setting to popup init
+// TODO: Add default target language setting to inline init
 document.addEventListener('DOMContentLoaded', () => {
-  browser.storage.local.get(['defFont', 'defTheme', 'usePopup', 'phraseSelect', 'popupBehavior'], config => {
+  browser.storage.local.get(['defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
 
-    usePopup = (config.usePopup !== undefined) ? config.usePopup : true;
+    useInline = (config.useInline !== undefined) ? config.useInline : true;
     phraseSelect = config.phraseSelect ? config.phraseSelect : 'drag';
-    popupBehavior = config.popupBehavior ? config.popupBehavior : 'icon';
+    inlineBehavior = config.inlineBehavior ? config.inlineBehavior : 'icon';
 
-    // If popup is disabled, then nothing will happen to the page
-    if (usePopup) {
+    // If inline is disabled, then nothing will happen to the page
+    if (useInline) {
       // TODO: Check if been created already (DOMContentLoaded firing twice problem)
       icon = createIcon();
-      popup = createPopup();
+      inline = createInline();
 
       window.addEventListener('mousedown', mouseDown);
       window.addEventListener('mouseup', mouseUp);
@@ -39,41 +39,41 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('keyup', keyUp);
 
       // Set font
-      popup.style.fontFamily = defFont + ', ' + FONTS.join(', ');
+      inline.style.fontFamily = defFont + ', ' + FONTS.join(', ');
 
       // Set theme 
       if (defTheme == 'auto') {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
           // Light mode
-          popup.classList.add('light');
+          inline.classList.add('light');
         } else {
           // Dark mode
-          popup.classList.add('dark');
+          inline.classList.add('dark');
         }
       } else if (defTheme == 'light') {
-        popup.classList.add('light');
+        inline.classList.add('light');
       } else {
-        popup.classList.add('dark');
+        inline.classList.add('dark');
       }
     }
   });
 });
 
 function mouseDown(event) {
-  if (icon.contains(event.target) || popup.contains(event.target)) return;
+  if (icon.contains(event.target) || inline.contains(event.target)) return;
 
   selection = null;
   hideIcon();
-  hidePopup();
+  hideInline();
 
   dragging = true;
 }
 
 function mouseUp(event) {
-  if (icon.contains(event.target) || popup.contains(event.target)) return;
+  if (icon.contains(event.target) || inline.contains(event.target)) return;
 
   if (selectionReady) {
-    popupBehavior === 'icon' ? showIcon(event) : showPopup();
+    inlineBehavior === 'icon' ? showIcon(event) : showInline();
 
     selectionReady = false;
   }
@@ -93,7 +93,7 @@ function selectionChange() {
         selection = window.getSelection();
         selectedText = selection.toString();
 
-        // Mouse is held down. Pass showing icon/popup to mouseup event
+        // Mouse is held down. Pass showing icon/inline to mouseup event
         selectionReady = true;
         return;
       } 
@@ -125,7 +125,7 @@ function keyUp(event) {
 
 function createIcon() {
   let container = document.createElement('div');
-  container.className = 'papagoExt-button';
+  container.className = 'papagoExt-icon';
 
   let image = document.createElement('div');
   image.style = `background-image: url(${browser.runtime.getURL('icons/19.png')}); height: 19px; width: 19px;`;
@@ -137,14 +137,14 @@ function createIcon() {
     e.preventDefault();
     e.stopPropagation();
   });
-  container.addEventListener('click', showPopup);
+  container.addEventListener('click', showInline);
 
   return container;
 }
 
-function createPopup() {
+function createInline() {
   let container = document.createElement('div');
-  container.className = 'papagoExt-popup';
+  container.className = 'papagoExt-inline';
 
   let path = browser.runtime.getURL('content/content.html');
   readFile(path, (res) => {
@@ -210,7 +210,7 @@ function hideIcon() {
   icon.style.display = 'none';
 }
 
-function showPopup() {
+function showInline() {
   hideIcon();
 
   setResult();
@@ -228,20 +228,20 @@ function showPopup() {
 
   let left = ((rect.right + rect.left) / 2) - 175 + getPageXOffset();
 
-  // Check if popup will be off screen.
+  // Check if inline will be off screen.
   if (left > (window.innerWidth - 350 + getPageXOffset())) {
     left = window.innerWidth - 25 - 350 + getPageXOffset();
   } else if (left < (10 + getPageXOffset())) {
     left = 10 + getPageXOffset();
   }
 
-  popup.style.top = top + "px";
-  popup.style.left = left + "px";
-  popup.style.display = 'block';
+  inline.style.top = top + "px";
+  inline.style.left = left + "px";
+  inline.style.display = 'block';
 }
 
-function hidePopup() {
-  popup.style.display = 'none';
+function hideInline() {
+  inline.style.display = 'none';
 
   let result = document.getElementById('papagoExt-result-text');
   result.value = '';

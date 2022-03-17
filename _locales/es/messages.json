@@ -139,11 +139,11 @@
 		"message": "Noche"
 	},
 
-	"popup_options": {
+	"inline_options": {
 		"message": "Opciones de Traductor Emergente"
 	},
 
-	"use_popup": {
+	"use_inline": {
 		"message": "Usar la traductor emergente"
 	},
 
@@ -163,15 +163,15 @@
 		"message": "Alt + Arrastrar"
 	},
 
-	"popup_behavior": {
+	"inline_behavior": {
 		"message": "Funcionamiento de Traductor Emergente"
 	},
 
-	"popup_display_icon": {
+	"inline_display_icon": {
 		"message": "Hacer clic en icono para monstrar los resultados de la traducción"
 	},
 
-	"popup_display_instant": {
+	"inline_display_instant": {
 		"message": "Mostrar resultados de traducción inmediatamente después de seleccionar"
 	},
 
