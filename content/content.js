@@ -1,10 +1,9 @@
 // Constants
 const SELECTION_CHECK = /^[0-9\s\$\^\&\]\[\/\\!@#<>%*)('"{};:?|+=.,_-]+$/;
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
-const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
 
 // Options variables
-var useInline, phraseSelect, inlineBehavior;
+var defLang, useInline, phraseSelect, inlineBehavior;
 
 // Global variables
 var dragging = false;
@@ -15,13 +14,12 @@ var selection, selectedText, selectedLang;
 var icon, inline;
 
 
-// TODO: Add default target language setting to inline init
 document.addEventListener('DOMContentLoaded', () => {
   // Checking if script has already been injected
   if (document.getElementsByClassName('papagoExt-icon').length > 0 
     && document.getElementsByClassName('papagoExt-inline').length > 0) return;
 
-  browser.storage.local.get(['defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior'], config => {
+  browser.storage.local.get(['defTargetLang', 'defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior', 'browserLang'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
 
@@ -31,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If inline is disabled, then nothing will happen to the page
     if (useInline) {
+      defLang = config.defTargetLang || config.browserLang || 'en';
+
       icon = createIcon();
       inline = createInline();
 
@@ -155,9 +155,7 @@ function createInline() {
   
     let target = document.getElementById('papagoExt-language-target');
     target.addEventListener('change', setResult);
-    if (LANGS.includes(navigator.language.substring(0, 2))) {
-      target.value = navigator.language.substring(0, 2);
-    }
+    target.value = defLang;
 
     let copyButton = document.getElementById('papagoExt-copy-button');
     copyButton.addEventListener('click', copyText);

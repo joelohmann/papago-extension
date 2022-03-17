@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   openNaver.addEventListener('click', openNaverSite);
 
   // Load stored settings
-  browser.storage.local.get(['defFont', 'defTheme', 'rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult'], config => {
+  browser.storage.local.get(['defFont', 'defTheme', 'rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult', 'browserLang'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
 
@@ -59,17 +59,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Restore last session or set up default settings
     if (config.rememberLast != false) {
-      // DOM is already in default settings if there is no stored config
-      if (!config.source || !config.target) return;
+      let target = document.getElementById('language-target');
+      if (!config.source || !config.target) {
+        // DOM is already in default settings if there is no stored config
+        target.value = config.browserLang || 'en';
+        honorificCheck();
+        return
+      }
 
       // Restore last session
+      target.value = config.target;
+      honorificCheck(target.value);
+
       let source = document.getElementById('language-source');
       source.value = config.source;
       swapCheck();
-
-      let target = document.getElementById('language-target');
-      target.value = config.target;
-      honorificCheck(target.value);
 
       if (config.lastSearch) {
         let text = document.getElementById('input-text');
@@ -83,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // Using desired target language
       let target = document.getElementById('language-target');
-      if (config.defTargetLang) target.value = config.defTargetLang;
+      target.value = config.defTargetLang || config.browserLang || 'en';
       honorificCheck(target.value);
     }
   });
