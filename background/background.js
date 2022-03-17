@@ -1,43 +1,21 @@
+const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
+
+detectPreferredLanguage();
+
+// Handle translation requests
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {		
-	browser.storage.local.get(['cache'], items => {
-		// Check the cache first
-		// if (items.cache) {
-		// 	// Search cache
-		// 	let cached = items.cache.find(obj => JSON.stringify(obj.request) == JSON.stringify(request));
-		// 	if (cached) {
-		// 		// Request is cached
-		// 		sendResponse(cached.response);
-		// 		return;
-		// 	}
-		// }
-
-		// Request not in cache
-		// Clone original request
-		let initRequest = JSON.parse(JSON.stringify(request));
-
-		// Handle translation request
-		switch (request.action) {
-			case 'detect':
-				detect(request)
-					.then(body => {
-						sendResponse(body);
-						storeCache(items.cache || [], initRequest, body);
-					})
-					.catch(err => sendResponse(err));
-				return;
-			case 'translate':
-				translate(request)
-					.then(body => {
-						sendResponse(body);
-						storeCache(items.cache || [], initRequest, body);
-					})
-					.catch(err => sendResponse(err));
-				return;
-		}
-	});
-
-	// Tells sender to wait for a response
-	return true;
+	switch (request.action) {
+		case 'detect':
+			detect(request)
+				.then(body => sendResponse(body))
+				.catch(err => sendResponse(err));
+			return true;
+		case 'translate':
+			translate(request)
+				.then(body => sendResponse(body))
+				.catch(err => sendResponse(err));
+			return true;
+	}
 });
 
 async function call(url) {
@@ -58,17 +36,14 @@ function translate(request) {
 	return call("https://papago-extension.herokuapp.com/api/v1/translate?" + request.query)
 }
 
-function storeCache(cache, request, response) {
-	// Make sure cache doesn't exceed 5 requests
-	if (cache.length > 4) cache.shift();
+function detectPreferredLanguage() {
+	let browserLang = window.navigator.language.substring(0, 2);
 
-	// Add request to cache
-	cache.push({
-		request: request,
-		response: response
-	});
-
+	if (!LANGS.includes(browserLang)) {
+		browserLang = null;
+	}
+	
 	browser.storage.local.set({
-		cache: cache
+		browserLang: browserLang
 	});
 }
