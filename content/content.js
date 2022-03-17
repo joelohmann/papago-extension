@@ -10,13 +10,17 @@ var useInline, phraseSelect, inlineBehavior;
 var dragging = false;
 var selectionReady = false;
 var keyPressed = false;
-var selection, selectedText;
+var selection, selectedText, selectedLang;
 
 var icon, inline;
 
 
 // TODO: Add default target language setting to inline init
 document.addEventListener('DOMContentLoaded', () => {
+  // Checking if script has already been injected
+  if (document.getElementsByClassName('papagoExt-icon').length > 0 
+    && document.getElementsByClassName('papagoExt-inline').length > 0) return;
+
   browser.storage.local.get(['defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
@@ -27,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If inline is disabled, then nothing will happen to the page
     if (useInline) {
-      // TODO: Check if been created already (DOMContentLoaded firing twice problem)
       icon = createIcon();
       inline = createInline();
 
@@ -62,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function mouseDown(event) {
   if (icon.contains(event.target) || inline.contains(event.target)) return;
 
-  selection = null;
+  selection = selectedText = selectedLang = null;
   hideIcon();
   hideInline();
 
@@ -81,7 +84,6 @@ function mouseUp(event) {
   dragging = false;
 }
 
-// TODO: Hide icon if selection changes and mouse is not held (highlight and delete, for example. Or random site bs)
 function selectionChange() {
   let tempSelection = window.getSelection();
   let tempText = tempSelection.toString();
@@ -133,9 +135,9 @@ function createIcon() {
   container.appendChild(image);
   document.body.appendChild(container);
 
-  container.addEventListener('mousedown', e => {
-    e.preventDefault();
-    e.stopPropagation();
+  container.addEventListener('mousedown', event => {
+    event.preventDefault();
+    event.stopPropagation();
   });
   container.addEventListener('click', showInline);
 
@@ -205,7 +207,6 @@ function showIcon(event) {
   setTimeout(() => {icon.style.display = 'none'}, 20000);
 }
 
-// Add and remove from DOM instead of changing display? 
 function hideIcon() {
   icon.style.display = 'none';
 }
@@ -261,30 +262,52 @@ function loading(bool) {
   }
 }
 
-// TODO: Send translate request instead of detection if the selection 
-// hasn't changed and we know the source language already.
 function setResult() {
   let target = document.getElementById('papagoExt-language-target');
   let result = document.getElementById('papagoExt-result-text');
 
-  loading(true);
-
-  sendTranslate(target.value, selectedText)
-  .then(response => {
-    if (!response.message) throw new Error(response);
-
-    result.value = response.message.result.translatedText;
-
-    if (response.message.result.tarLangType !== target.value) {
-      target.value = response.message.result.tarLangType;
+  // Check if source languange is known already
+  if (selectedLang) {
+    if (selectedLang === target.value) {
+      return result.value = selectedText;
     }
 
-    loading(false);
-  })
-  .catch(err => {
-    result.value = err.message;
-    loading(false);
-  });
+    loading(true);
+
+    sendTranslate(selectedLang, target.value, selectedText)
+    .then(response => {
+      if (!response.message) throw new Error(response);
+  
+      result.value = response.message.result.translatedText;
+  
+      loading(false);
+    })
+    .catch(err => {
+      result.value = err.message;
+      loading(false);
+    });
+  } else {
+    // Source language needs to be detected
+    loading(true);
+
+    sendDetect(target.value, selectedText)
+    .then(response => {
+      if (!response.message) throw new Error(response);
+
+      result.value = response.message.result.translatedText;
+      selectedLang = response.message.result.srcLangType;
+
+      if (response.message.result.tarLangType !== target.value) {
+        target.value = response.message.result.tarLangType;
+      }
+
+      loading(false);
+    })
+    .catch(err => {
+      result.value = err.message;
+      loading(false);
+    });
+  }
 }
 
 function copyText() {
@@ -302,8 +325,15 @@ function copied(copyButton) {
   setTimeout(() => div.remove(), 1900);
 }
 
-// Runtime message to background script
-async function sendTranslate(targetLang, text) {
+// Runtime messages to background script
+async function sendTranslate(sourceLang, targetLang, text) {
+  return browser.runtime.sendMessage({
+    action: 'translate',
+    query: `source=${sourceLang}&target=${targetLang}&text=${text}&honorific=true`
+  })
+}
+
+async function sendDetect(targetLang, text) {
   return browser.runtime.sendMessage({
     action: 'detect',
     query: `target=${targetLang}&text=${text}&honorific=true`
