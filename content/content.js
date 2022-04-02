@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementsByClassName('papagoExt-icon').length > 0 
     && document.getElementsByClassName('papagoExt-inline').length > 0) return;
 
+  // TODO: Use object with default values when nothing there.
+  browser.storage.local.get({
+    defTargetLang: config.browserLang || 'en',
+
+  })
+
   browser.storage.local.get(['defTargetLang', 'defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior', 'browserLang'], config => {
     let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
     let defTheme = config.defTheme ? config.defTheme : 'auto';
