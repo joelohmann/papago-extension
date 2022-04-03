@@ -34,9 +34,6 @@
     ],
     "default_locale": "en",
     "description": "__MSG_extDescription__",
-    "developer": {
-        "name": "Joe Lohmann"
-    },
     "icons": {
         "512": "icons/512.png",
         "128": "icons/128.png",
