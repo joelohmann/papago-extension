@@ -35,15 +35,25 @@ document.addEventListener('DOMContentLoaded', () => {
   openNaver.addEventListener('click', openNaverSite);
 
   // Load stored settings
-  browser.storage.local.get(['defFont', 'defTheme', 'rememberLast', 'defTargetLang', 'source', 'target', 'lastSearch', 'lastResult', 'browserLang'], config => {
-    let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
-    let defTheme = config.defTheme ? config.defTheme : 'auto';
+  browser.storage.local.get({
+    defFont: 'Tahoma',
+    defTheme: 'auto',
+    rememberLast: true,
+    defTargetLang: null,
+    source: null,
+    target: null,
+    lastSearch: null,
+    lastResult: null,
+    browserLang: 'en'
+  })
+  .then(config => {
+    let defFont = config.defFont == 'default' ? 'Tahoma' : config.defFont;
 
     // Set font
     document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
 
     // Set theme 
-    if (defTheme == 'auto') {
+    if (config.defTheme == 'auto') {
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
         // Light mode
         document.documentElement.classList.add('light');
@@ -51,18 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dark mode
         document.documentElement.classList.add('dark');
       }
-    } else if (defTheme == 'light') {
+    } else if (config.defTheme == 'light') {
       document.documentElement.classList.add('light');
     } else {
       document.documentElement.classList.add('dark');
     }
 
     // Restore last session or set up default settings
-    if (config.rememberLast != false) {
+    if (config.rememberLast) {
       let target = document.getElementById('language-target');
       if (!config.source || !config.target) {
         // DOM is already in default settings if there is no stored config
-        target.value = config.browserLang || 'en';
+        target.value = config.browserLang;
         honorificCheck();
         return
       }
@@ -87,10 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // Using desired target language
       let target = document.getElementById('language-target');
-      target.value = config.defTargetLang || config.browserLang || 'en';
+      target.value = config.defTargetLang || config.browserLang;
       honorificCheck(target.value);
     }
-  });
+  })
+  .catch(err => {console.log(err)});
 
   // Locales
   document.getElementById('source-auto').textContent = browser.i18n.getMessage('auto');

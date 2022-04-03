@@ -14,9 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
   var phraseSelect = document.getElementsByName('phrase-select')[0];
   phraseSelect.addEventListener('change', storeConfig);
 
-  browser.storage.local.get(['rememberLast', 'defTargetLang', 'defFont', 'defTheme', 
-  'useInline', 'phraseSelect', 'inlineBehavior'
-  ], config => {
+  browser.storage.local.get([
+    'rememberLast', 
+    'defTargetLang', 
+    'defFont', 
+    'defTheme', 
+    'useInline', 
+    'phraseSelect', 
+    'inlineBehavior'
+  ])
+  .then(config => {
     var useDefaultsList = document.getElementsByName('translation-defaults');
     for (i = 0; i < useDefaultsList.length; i++) {
       useDefaultsList[i].addEventListener('change', storeConfig);
@@ -46,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
         inlineDisplaylist[i].checked = (inlineDisplaylist[i].value == config.inlineBehavior);
       }
     }
-  });
+  })
+  .catch(err => {console.log(err)});
 
   // Locales
   document.getElementById('translation-defaults-title').textContent = browser.i18n.getMessage('translation_defaults');
