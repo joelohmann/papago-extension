@@ -19,17 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementsByClassName('papagoExt-icon').length > 0 
     && document.getElementsByClassName('papagoExt-inline').length > 0) return;
 
-  browser.storage.local.get(['defTargetLang', 'defFont', 'defTheme', 'useInline', 'phraseSelect', 'inlineBehavior', 'browserLang'], config => {
-    let defFont = (config.defFont && config.defFont != 'default') ? config.defFont : 'Tahoma';
-    let defTheme = config.defTheme ? config.defTheme : 'auto';
+  // Set default settings if none have been changed by the user yet.
+  browser.storage.local.get({
+    defTargetLang: null,
+    defFont: 'Tahoma',
+    defTheme: 'auto',
+    useInline: true,
+    phraseSelect: 'drag',
+    inlineBehavior: 'icon',
+    browserLang: 'en'
+  })
+  .then(config => {
+    let defFont = config.defFont == 'default' ? 'Tahoma' : config.defFont;
 
-    useInline = (config.useInline !== undefined) ? config.useInline : true;
-    phraseSelect = config.phraseSelect ? config.phraseSelect : 'drag';
-    inlineBehavior = config.inlineBehavior ? config.inlineBehavior : 'icon';
+    useInline = config.useInline;
+    phraseSelect = config.phraseSelect;
+    inlineBehavior = config.inlineBehavior;
 
     // If inline is disabled, then nothing will happen to the page
     if (useInline) {
-      defLang = config.defTargetLang || config.browserLang || 'en';
+      defLang = config.defTargetLang || config.browserLang;
 
       icon = createIcon();
       inline = createInline();
@@ -45,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       inline.style.fontFamily = defFont + ', ' + FONTS.join(', ');
 
       // Set theme 
-      if (defTheme == 'auto') {
+      if (config.defTheme == 'auto') {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
           // Light mode
           inline.classList.add('light');
@@ -53,13 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
           // Dark mode
           inline.classList.add('dark');
         }
-      } else if (defTheme == 'light') {
+      } else if (config.defTheme == 'light') {
         inline.classList.add('light');
       } else {
         inline.classList.add('dark');
       }
     }
-  });
+  })
+  .catch(err => {console.log(err)});
 });
 
 function mouseDown(event) {
@@ -353,12 +363,12 @@ function readFile(path, callback){
 
       reader.readAsText(blob); 
   });
-};
+}
 
 function getPageXOffset() {
   return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
-};
+}
 
 function getPageYOffset() {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-};
+}
