@@ -14,6 +14,7 @@ body {
     padding: 5px 10px;
     text-align: center;
     overflow: hidden;
+    visibility: hidden;
 }
 
 a {
@@ -187,36 +188,36 @@ html.light body {
 }
 
 html.light .bordered {
-background-color: #fafafa;
-border: 1px solid #dcdcdc;
+    background-color: #fafafa;
+    border: 1px solid #dcdcdc;
 }
 
 html.light #result-text {
-background-color: #fff;
+    background-color: #fff;
 }
 
 html.light select:hover,
 html.light button:hover {
-background-color: #c9c9c9;
+    background-color: #c9c9c9;
 }
 
 /* Dark mode */
 html.dark body {
-background-color: #323232;
-color: #ebebeb;
+    background-color: #323232;
+    color: #ebebeb;
 }
 
 html.dark .bordered {
-background-color: #484848;
-border: 1px solid #595959;
-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    background-color: #484848;
+    border: 1px solid #595959;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html.dark #result-text {
-background-color: #323232;
+    background-color: #323232;
 }
 
 html.dark select:hover,
 html.dark button:hover {
-background-color: #383838;
+    background-color: #383838;
 }
