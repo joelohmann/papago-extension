@@ -7,14 +7,13 @@ var defLang, useInline, phraseSelect, inlineBehavior;
 
 // Global variables
 var dragging = false;
-var selectionReady = false;
 var keyPressed = false;
 var selection, selectedText, selectedLang;
 
 var icon, inline;
 
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   // Checking if script has already been injected
   if (document.getElementsByClassName('papagoExt-icon').length > 0 
     && document.getElementsByClassName('papagoExt-inline').length > 0) return;
@@ -46,9 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('mousedown', mouseDown);
       window.addEventListener('mouseup', mouseUp);
 
-      document.addEventListener('selectionchange', selectionChange);
-      document.addEventListener('keydown', keyDown);
-      document.addEventListener('keyup', keyUp);
+      if (phraseSelect != 'drag') {
+        window.addEventListener('keydown', keyDown);
+        window.addEventListener('keyup', keyUp);
+      }
 
       // Set font
       inline.style.fontFamily = defFont + ', ' + FONTS.join(', ');
@@ -85,16 +85,6 @@ function mouseDown(event) {
 function mouseUp(event) {
   if (icon.contains(event.target) || inline.contains(event.target)) return;
 
-  if (selectionReady) {
-    inlineBehavior === 'icon' ? showIcon(event) : showInline();
-
-    selectionReady = false;
-  }
-
-  dragging = false;
-}
-
-function selectionChange() {
   let tempSelection = window.getSelection();
   let tempText = tempSelection.toString();
 
@@ -106,24 +96,19 @@ function selectionChange() {
         selectedText = selection.toString();
 
         // Mouse is held down. Pass showing icon/inline to mouseup event
-        selectionReady = true;
-        return;
+        inlineBehavior === 'icon' ? showIcon(event) : showInline();
       } 
     }
   }
-  // Selection check failed or drag condition wasn't met
-  selectionReady = false;
+
+  dragging = false;
 }
 
 function keyDown(event) {
-  if (phraseSelect !== 'drag') {
-    if (phraseSelect === 'alt-drag' && event.keyCode === 18) {
-      keyPressed = true;
-    } else if (phraseSelect === 'ctrl-drag' && event.keyCode === 17) {
-      keyPressed = true;
-    } else {
-      keyPressed = false;
-    }
+  if (phraseSelect === 'alt-drag' && event.keyCode === 18) {
+    keyPressed = true;
+  } else if (phraseSelect === 'ctrl-drag' && event.keyCode === 17) {
+    keyPressed = true;
   }
 }
 
