@@ -2,38 +2,7 @@
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Set event listeners
-  let source = document.getElementById('language-source');
-  source.addEventListener('change', onSourceChange);
-
-  let target = document.getElementById('language-target');
-  target.addEventListener('change', onTargetChange);
-
-  let transButton = document.getElementById('translate-button');
-  transButton.addEventListener('click', translateText);
-
-  let swapButton = document.getElementById('swap-button');
-  swapButton.addEventListener('click', swapLangs);
-
-  let clearButton = document.getElementById('clear-button');
-  clearButton.addEventListener('click', clearText);
-
-  let copyButton = document.getElementById('copy-button');
-  copyButton.addEventListener('click', copyText);
-
-  let honorButton = document.getElementById('honorific-button');
-  honorButton.addEventListener('click', honorificToggle);
-
-  let transPage = document.getElementById('transPage');
-  transPage.addEventListener('click', translatePage);
-
-  let settings = document.getElementById('settings');
-  settings.addEventListener('click', openOptionsPage);
-
-  let openNaver = document.getElementById('openNaver');
-  openNaver.addEventListener('click', openNaverSite);
-
+window.addEventListener('DOMContentLoaded', () => {
   // Load stored settings
   browser.storage.local.get({
     defFont: 'Tahoma',
@@ -47,11 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     browserLang: 'en'
   })
   .then(config => {
-    let defFont = config.defFont == 'default' ? 'Tahoma' : config.defFont;
-
-    // Set font
-    document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
-
     // Set theme 
     if (config.defTheme == 'auto') {
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
@@ -66,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       document.documentElement.classList.add('dark');
     }
+
+    // Set font
+    let defFont = config.defFont == 'default' ? 'Tahoma' : config.defFont;
+
+    document.body.style.fontFamily = defFont + ', ' + FONTS.join(', ');
 
     // Restore last session or set up default settings
     if (config.rememberLast) {
@@ -101,7 +70,44 @@ document.addEventListener('DOMContentLoaded', () => {
       honorificCheck(target.value);
     }
   })
+  .then(() => {
+    document.body.style.visibility = 'visible';
+  })
   .catch(err => {console.log(err)});
+
+  // Set event listeners
+  let source = document.getElementById('language-source');
+  source.addEventListener('change', onSourceChange);
+
+  let target = document.getElementById('language-target');
+  target.addEventListener('change', onTargetChange);
+
+  let text = document.getElementById('input-text');
+  text.addEventListener('keydown', onKeyDown);
+
+  let transButton = document.getElementById('translate-button');
+  transButton.addEventListener('click', translateText);
+
+  let swapButton = document.getElementById('swap-button');
+  swapButton.addEventListener('click', swapLangs);
+
+  let clearButton = document.getElementById('clear-button');
+  clearButton.addEventListener('click', clearText);
+
+  let copyButton = document.getElementById('copy-button');
+  copyButton.addEventListener('click', copyText);
+
+  let honorButton = document.getElementById('honorific-button');
+  honorButton.addEventListener('click', honorificToggle);
+
+  let transPage = document.getElementById('transPage');
+  transPage.addEventListener('click', translatePage);
+
+  let settings = document.getElementById('settings');
+  settings.addEventListener('click', openOptionsPage);
+
+  let openNaver = document.getElementById('openNaver');
+  openNaver.addEventListener('click', openNaverSite);
 
   // Locales
   document.getElementById('source-auto').textContent = browser.i18n.getMessage('auto');
@@ -141,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   transPage.textContent = browser.i18n.getMessage('translate_this_page');
   settings.textContent = browser.i18n.getMessage('settings');
   openNaver.textContent = browser.i18n.getMessage('open_in_papago');
-})
+});
 
 function onSourceChange(event) {
   swapCheck();
@@ -245,6 +251,15 @@ async function sendTranslate(sourceLang, targetLang, text, honorific) {
     action: 'translate',
     query: `source=${sourceLang}&target=${targetLang}&text=${text}&honorific=${honorific}`
   })
+}
+
+function onKeyDown(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    translateText()
+  }
 }
 
 function swapLangs(event) {
