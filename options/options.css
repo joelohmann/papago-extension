@@ -63,6 +63,10 @@ footer {
   margin: 0;
 }
 
+#logo {
+  width: 250px;
+}
+
 #translation-options {
   display: none;
 }
