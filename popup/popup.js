@@ -316,7 +316,8 @@ function translatePage(event) {
   browser.tabs.query({
     currentWindow: true,
     active: true
-  }, tabs => {
+  })
+  .then(tabs => {
     browser.tabs.create({
       url: `https://papago.naver.net/website?source=${source.value}&target=${target.value}&url=${tabs[0].url}`
     })
