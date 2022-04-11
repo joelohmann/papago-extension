@@ -14,7 +14,6 @@ body {
     padding: 5px 10px;
     text-align: center;
     overflow: hidden;
-    visibility: hidden;
 }
 
 a {
@@ -65,7 +64,6 @@ textarea {
 .bordered {
     padding: 2px;
     border-radius: 0.25rem;
-    transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 #toolbar-top {
@@ -197,8 +195,18 @@ html.light #result-text {
 }
 
 html.light select:hover,
-html.light button:hover {
-    background-color: #c9c9c9;
+html.light button:not(#translate-button):hover {
+    animation: bgLight 0.25s forwards ease-in-out;
+}
+
+@keyframes bgLight {
+    from {
+        background-color: #fafafa;
+    }
+
+    to {
+        background-color: #c9c9c9;
+    }
 }
 
 /* Dark mode */
@@ -218,6 +226,16 @@ html.dark #result-text {
 }
 
 html.dark select:hover,
-html.dark button:hover {
-    background-color: #383838;
+html.dark button:not(#translate-button):hover {
+    animation: bgDark 0.25s forwards ease-in-out;
+}
+
+@keyframes bgDark {
+    from {
+        background-color: #484848;
+    }
+
+    to {
+        background-color: #383838;
+    }
 }
