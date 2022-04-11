@@ -54,7 +54,7 @@
   margin: 0 0 5px 0;
   padding: 2px;
   border-radius: 0.25rem;
-  transition: background-color 0.25s, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.25s;
 }
 
 #papagoExt-language-target {
