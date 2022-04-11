@@ -70,10 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
       honorificCheck(target.value);
     }
   })
-  .then(() => {
-    document.body.style.visibility = 'visible';
-  })
-  .catch(err => {console.log(err)});
+  .catch(err => {
+    console.log(err)
+  });
 
   // Set event listeners
   let source = document.getElementById('language-source');
