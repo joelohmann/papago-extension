@@ -52,6 +52,6 @@
         "storage", 
         "tabs"
     ],
-    "version": "1.0",
+    "version": "1.0.0",
     "web_accessible_resources": ["/icons/*", "/content/content.html"]
 }
