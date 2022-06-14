@@ -8,6 +8,10 @@ var defLang, useInline, phraseSelect, inlineBehavior;
 // Global variables
 var dragging = false;
 var keyPressed = false;
+
+var draggableDown = false;
+var offset;
+
 var selection, selectedText, selectedLang;
 
 var icon, inline;
@@ -44,6 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       window.addEventListener('mousedown', mouseDown);
       window.addEventListener('mouseup', mouseUp);
+      window.addEventListener('mousemove', mouseMove);
 
       if (phraseSelect != 'drag') {
         window.addEventListener('keydown', keyDown);
@@ -83,6 +88,7 @@ function mouseDown(event) {
 }
 
 function mouseUp(event) {
+  draggableDown = false;
   if (icon.contains(event.target) || inline.contains(event.target)) return;
 
   let tempSelection = window.getSelection();
@@ -102,6 +108,14 @@ function mouseUp(event) {
   }
 
   dragging = false;
+}
+
+function mouseMove(event) {
+  if (draggableDown) {
+    event.preventDefault();
+    inline.style.left = (event.clientX + offset.left) + 'px';
+    inline.style.top = (event.clientY + offset.top) + 'px';
+  }
 }
 
 function keyDown(event) {
@@ -154,6 +168,19 @@ function createInline() {
 
     let copyButton = document.getElementById('papagoExt-copy-button');
     copyButton.addEventListener('click', copyText);
+
+    let draggables = document.getElementsByClassName('papago-draggable')
+    for (let i = 0; i  < draggables.length; i++) {
+      draggables[i].addEventListener('mousedown', (event) => {
+        if (event.target != draggables[i]) return;
+
+        draggableDown = true;
+        offset = {
+          left: container.offsetLeft - event.clientX,
+          top: container.offsetTop - event.clientY
+        }
+      })
+    }
 
     // Locales
     document.getElementById('en').textContent = browser.i18n.getMessage('en');
@@ -310,7 +337,11 @@ function copyText() {
 }
 
 function copied(copyButton) {
+  let copied = document.getElementById('papago-copied');
+  if (copied) copied.remove();
+  
   let div = document.createElement('div');
+  div.id = 'papago-copied';
   div.textContent = browser.i18n.getMessage('copied');
   div.style = 'overflow: hidden; transform: translateX(15px); animation: fade 2s ease-in;';
 
