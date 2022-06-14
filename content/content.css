@@ -37,6 +37,10 @@
   overflow: hidden !important;
 }
 
+.papago-draggable {
+  cursor: move !important;
+}
+
 .papagoExt-flex {
   display: flex !important;
   align-items: center !important;
