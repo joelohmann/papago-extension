@@ -17,7 +17,6 @@ body {
 }
 
 a {
-    position: absolute;
     color: #5892e4;
     text-decoration: none;
     cursor: pointer;
@@ -61,6 +60,13 @@ textarea {
     justify-content: space-between;
 }
 
+.flex-even {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .bordered {
     padding: 2px;
     border-radius: 0.25rem;
@@ -100,7 +106,7 @@ textarea {
 
 #copy-section {
     width: 100%;
-    height: 20px;
+    height: 30px;
     margin-bottom: 10px;
 }
 
@@ -115,17 +121,13 @@ textarea {
     height: 40px;
 }
 
-a:nth-child(1) {
-    right: 65%;
+a:nth-child(1), 
+a:nth-child(3) {
+    width: 150px;
 }
 
 a:nth-child(2) {
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-a:nth-child(3) {
-    left: 65%;
+    width: 70px;
 }
 
 #loader {
