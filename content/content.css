@@ -26,7 +26,8 @@
   box-sizing: border-box !important;
   display: none;
   width: 350px !important;
-  height: 125px !important;
+  min-height: 125px !important;
+  height: auto !important;
   margin: 0 !important;
   padding: 5px 10px 5px 10px !important;
   text-align: center !important;
@@ -68,7 +69,7 @@
   cursor: pointer !important;
   appearance: auto !important;
   line-height: 22px !important;
-  width: 170px !important;
+  width: 140px !important;
   height: 22px !important;
 }
 
@@ -85,10 +86,12 @@
   color: inherit !important;
   box-sizing: border-box !important;
   width: 100% !important;
+  min-height: 82px !important;
+  max-height: 200px !important;
   margin: 0 !important;
   padding: 5px !important;
   flex-grow: 3 !important;
-  resize: none !important;
+  overflow: scroll !important;
 }
 
 #papagoExt-loader {
