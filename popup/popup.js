@@ -393,13 +393,17 @@ function loading(bool) {
   }
 }
 
-// TODO: Make this work without absolute. Locales don't look as good
 function copied() {
+  let copyButton = document.getElementById('copy-button');
+
   let div = document.createElement('div');
   div.textContent = "- " + browser.i18n.getMessage('copied');
-  div.style = 'position: absolute; left: 50%; transform: translateX(50%) translateY(2px); animation: fade 2s ease-in;';
+  div.style = 'position: absolute; animation: fade 2s ease-in;';
 
-  let copyButton = document.getElementById('copy-button');
+  console.log(copyButton.offsetLeft, copyButton.offsetWidth);
+  div.style.left = copyButton.offsetLeft + (copyButton.offsetWidth / 2) + 5 + 'px';
+  div.style.top = copyButton.offsetTop + 4 + 'px';
+
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
 }
