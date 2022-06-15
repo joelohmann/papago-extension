@@ -49,6 +49,8 @@ window.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('mousedown', mouseDown);
       window.addEventListener('mouseup', mouseUp);
       window.addEventListener('mousemove', mouseMove);
+      
+      document.addEventListener('selectionchange', selectionChange);
 
       if (phraseSelect != 'drag') {
         window.addEventListener('keydown', keyDown);
@@ -91,28 +93,31 @@ function mouseUp(event) {
   draggableDown = false;
   if (icon.contains(event.target) || inline.contains(event.target)) return;
 
-  let tempSelection = window.getSelection();
-  let tempText = tempSelection.toString();
+  // If the mouseup event's intention is to deselect, this timeout allows the browser to do so
+  // before continuing.
+  setTimeout(() => {
+    let tempSelection = window.getSelection();
+    let tempText = tempSelection.toString();
 
-  if (tempText.length > 0 && !SELECTION_CHECK.test(tempText)) {
-    if (phraseSelect === 'drag' || keyPressed) {
-      if (dragging) {
-        // Selection check passed: store selection
-        selection = window.getSelection();
-        selectedText = selection.toString();
+    if (tempText.length > 0 && !SELECTION_CHECK.test(tempText)) {
+      if (phraseSelect === 'drag' || keyPressed) {
+        if (dragging) {
+          // Selection check passed: store selection
+          selection = window.getSelection();
+          selectedText = selection.toString();
 
-        // Mouse is held down. Pass showing icon/inline to mouseup event
-        inlineBehavior === 'icon' ? showIcon(event) : showInline();
-      } 
+          // Mouse is held down. Pass showing icon/inline to mouseup event
+          inlineBehavior === 'icon' ? showIcon(event) : showInline();
+        } 
+      }
     }
-  }
 
-  dragging = false;
+    dragging = false;
+  }, 10);
 }
 
 function mouseMove(event) {
   if (draggableDown) {
-    event.preventDefault();
     inline.style.left = (event.clientX + offset.left) + 'px';
     inline.style.top = (event.clientY + offset.top) + 'px';
   }
@@ -131,6 +136,12 @@ function keyUp(event) {
     keyPressed = false;
   } else if (phraseSelect === 'ctrl-drag' && event.keyCode === 17) {
     keyPressed = false;
+  }
+}
+
+function selectionChange() {
+  if (window.getSelection().toString().length == 0) {
+    if (icon.style.display != 'none') hideIcon();
   }
 }
 
@@ -173,6 +184,8 @@ function createInline() {
     for (let i = 0; i  < draggables.length; i++) {
       draggables[i].addEventListener('mousedown', (event) => {
         if (event.target != draggables[i]) return;
+
+        event.preventDefault();
 
         draggableDown = true;
         offset = {
@@ -224,7 +237,9 @@ function showIcon(event) {
   icon.style.left = left + "px";
   icon.style.display = 'block';
 
-  setTimeout(() => {icon.style.display = 'none'}, 20000);
+  // Timeout can interfere with showing the icon if showIcon is called again. 
+  // Not sure how to check if icon has been hidden already.
+  // setTimeout(hideIcon, 20000);
 }
 
 function hideIcon() {
@@ -265,7 +280,7 @@ function hideInline() {
   inline.style.display = 'none';
 
   let result = document.getElementById('papagoExt-result-text');
-  result.value = '';
+  result.textContent = '';
 }
 
 // Blur and prevent clicking while showing the loading animation
@@ -289,7 +304,7 @@ function setResult() {
   // Check if source languange is known already
   if (selectedLang) {
     if (selectedLang === target.value) {
-      return result.value = selectedText;
+      return result.textContent = selectedText;
     }
 
     loading(true);
@@ -298,12 +313,12 @@ function setResult() {
     .then(response => {
       if (!response.message) throw new Error(response);
   
-      result.value = response.message.result.translatedText;
+      result.textContent = response.message.result.translatedText;
   
       loading(false);
     })
     .catch(err => {
-      result.value = err.message;
+      result.textContent = err.message;
       loading(false);
     });
   } else {
@@ -314,7 +329,7 @@ function setResult() {
     .then(response => {
       if (!response.message) throw new Error(response);
 
-      result.value = response.message.result.translatedText;
+      result.textContent = response.message.result.translatedText;
       selectedLang = response.message.result.srcLangType;
 
       if (response.message.result.tarLangType !== target.value) {
@@ -324,7 +339,7 @@ function setResult() {
       loading(false);
     })
     .catch(err => {
-      result.value = err.message;
+      result.textContent = err.message;
       loading(false);
     });
   }
@@ -332,18 +347,18 @@ function setResult() {
 
 function copyText() {
   let result = document.getElementById('papagoExt-result-text');
-  navigator.clipboard.writeText(result.value);
+  navigator.clipboard.writeText(result.textContent);
   copied(this);
 }
 
-function copied(copyButton) {
-  let copied = document.getElementById('papago-copied');
-  if (copied) copied.remove();
-  
+function copied(copyButton) {  
   let div = document.createElement('div');
-  div.id = 'papago-copied';
   div.textContent = browser.i18n.getMessage('copied');
-  div.style = 'overflow: hidden; transform: translateX(15px); animation: fade 2s ease-in;';
+  div.style = 'position: absolute; overflow: hidden; animation: fade 2s ease-in;';
+  div.style.right = copyButton.offsetWidth + 15 + 'px';
+  div.style.top = copyButton.offsetTop + 5 + 'px';
+
+  console.log(copyButton);
 
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
