@@ -46,15 +46,15 @@ window.addEventListener('DOMContentLoaded', () => {
       icon = createIcon();
       inline = createInline();
 
-      window.addEventListener('mousedown', mouseDown);
-      window.addEventListener('mouseup', mouseUp);
-      window.addEventListener('mousemove', mouseMove);
+      document.addEventListener('mousedown', mouseDown);
+      document.addEventListener('mouseup', mouseUp);
+      document.addEventListener('mousemove', mouseMove);
       
       document.addEventListener('selectionchange', selectionChange);
 
       if (phraseSelect != 'drag') {
-        window.addEventListener('keydown', keyDown);
-        window.addEventListener('keyup', keyUp);
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
       }
 
       // Set font
