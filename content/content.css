@@ -80,6 +80,7 @@
   height: 22px !important;
 }
 
+/* TODO: Find better solution for overflow-y scrollbar showing. */
 #papagoExt-result-text {
   font-family: inherit !important;
   font-size: inherit !important;
@@ -91,7 +92,7 @@
   margin: 0 !important;
   padding: 5px !important;
   flex-grow: 3 !important;
-  overflow: scroll !important;
+  overflow-y: scroll !important; 
 }
 
 #papagoExt-loader {
