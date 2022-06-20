@@ -1,6 +1,22 @@
 const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
+const PAGE_LANGS = ['en', 'ko', 'ja', 'zh-CN', 'zh-TW'];
 
+var browserLang;
 detectPreferredLanguage();
+
+browser.contextMenus.create({
+	id: "translatePage",
+	title: browser.i18n.getMessage("translate_this_page"),
+	contexts: ["all"]
+});
+
+browser.contextMenus.onClicked.addListener((info, tab) => {
+	switch (info.menuItemId) {
+		case "translatePage":
+			translatePage(tab);
+			break;
+	}
+});
 
 // Handle translation requests
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {		
@@ -37,13 +53,25 @@ function translate(request) {
 }
 
 function detectPreferredLanguage() {
-	let browserLang = window.navigator.language.substring(0, 2);
+	browserLang = window.navigator.language.substring(0, 2);
 
 	if (!LANGS.includes(browserLang)) {
 		browserLang = null;
 	}
-	
+
 	browser.storage.local.set({
 		browserLang: browserLang
 	});
 }
+
+function translatePage(tab) {
+	let sourceLang = PAGE_LANGS.includes(browserLang) ? browserLang : 'ko';
+	let targetLang = sourceLang != 'en' ? 'en' : 'ko';
+
+	let url = `https://papago.naver.net/website?locale=${browserLang}&source=${sourceLang}&target=${targetLang}&url=${encodeURIComponent(tab.url)}`;
+  
+	browser.tabs.create({
+		url: url,
+		index: tab.index + 1
+	})	
+  }
