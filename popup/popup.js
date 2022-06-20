@@ -1,5 +1,8 @@
 // Constants
 const FONTS = ['Tahoma', 'Geneva', 'Sans-Serif'];
+const PAGE_LANGS = ['en', 'ko', 'ja', 'zh-CN', 'zh-TW'];
+
+var locale;
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -69,6 +72,9 @@ window.addEventListener('DOMContentLoaded', () => {
       target.value = config.defTargetLang || config.browserLang;
       honorificCheck(target.value);
     }
+
+    // Set global locale language
+    locale = PAGE_LANGS.includes(config.browserLang) ? config.browserLang : 'en';
   })
   .catch(err => {
     console.log(err)
@@ -311,7 +317,10 @@ function honorificToggle(event) {
 
 function translatePage(event) {
   let source = document.getElementById('language-source');
+  let sourceLang = PAGE_LANGS.includes(source.value) ? source.value : 'ko';
+
   let target = document.getElementById('language-target');
+  let targetLang = PAGE_LANGS.includes(target.value) ? target.value : 'en';
 
   browser.tabs.query({
     currentWindow: true,
@@ -319,7 +328,7 @@ function translatePage(event) {
   })
   .then(tabs => {
     browser.tabs.create({
-      url: `https://papago.naver.net/website?source=${source.value}&target=${target.value}&url=${tabs[0].url}`
+      url: `https://papago.naver.net/website?locale=${locale}&source=${sourceLang}&target=${targetLang}&url=${encodeURIComponent(tabs[0].url)}`
     })
   })
 }
