@@ -168,50 +168,47 @@ function createInline() {
   let container = document.createElement('div');
   container.className = 'papagoExt-inline';
 
-  let path = browser.runtime.getURL('content/content.html');
-  readFile(path, (res) => {
-    container.innerHTML = res;
-    document.body.appendChild(container);
-  
-    let target = document.getElementById('papagoExt-language-target');
-    target.addEventListener('change', setResult);
-    target.value = defLang;
+  container.innerHTML = contentHTML;
+  document.body.appendChild(container);
 
-    let copyButton = document.getElementById('papagoExt-copy-button');
-    copyButton.addEventListener('click', copyText);
+  let target = document.getElementById('papagoExt-language-target');
+  target.addEventListener('change', setResult);
+  target.value = defLang;
 
-    let draggables = document.getElementsByClassName('papago-draggable')
-    for (let i = 0; i  < draggables.length; i++) {
-      draggables[i].addEventListener('mousedown', (event) => {
-        if (event.target != draggables[i]) return;
+  let copyButton = document.getElementById('papagoExt-copy-button');
+  copyButton.addEventListener('click', copyText);
 
-        event.preventDefault();
+  let draggables = document.getElementsByClassName('papago-draggable')
+  for (let i = 0; i  < draggables.length; i++) {
+    draggables[i].addEventListener('mousedown', (event) => {
+      if (event.target != draggables[i]) return;
 
-        draggableDown = true;
-        offset = {
-          left: container.offsetLeft - event.clientX,
-          top: container.offsetTop - event.clientY
-        }
-      })
-    }
+      event.preventDefault();
 
-    // Locales
-    document.getElementById('en').textContent = browser.i18n.getMessage('en');
-    document.getElementById('ko').textContent = browser.i18n.getMessage('ko');
-    document.getElementById('ja').textContent = browser.i18n.getMessage('ja');
-    document.getElementById('zh-CN').textContent = browser.i18n.getMessage('zh_CN');
-    document.getElementById('zh-TW').textContent = browser.i18n.getMessage('zh_TW');
-    document.getElementById('vi').textContent = browser.i18n.getMessage('vi');
-    document.getElementById('id').textContent = browser.i18n.getMessage('id');
-    document.getElementById('th').textContent = browser.i18n.getMessage('th');
-    document.getElementById('de').textContent = browser.i18n.getMessage('de');
-    document.getElementById('ru').textContent = browser.i18n.getMessage('ru');
-    document.getElementById('es').textContent = browser.i18n.getMessage('es');
-    document.getElementById('it').textContent = browser.i18n.getMessage('it');
-    document.getElementById('fr').textContent = browser.i18n.getMessage('fr');
+      draggableDown = true;
+      offset = {
+        left: container.offsetLeft - event.clientX,
+        top: container.offsetTop - event.clientY
+      }
+    })
+  }
 
-    copyButton.textContent = browser.i18n.getMessage('copy');
-  });
+  // Locales
+  document.getElementById('en').textContent = browser.i18n.getMessage('en');
+  document.getElementById('ko').textContent = browser.i18n.getMessage('ko');
+  document.getElementById('ja').textContent = browser.i18n.getMessage('ja');
+  document.getElementById('zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+  document.getElementById('zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+  document.getElementById('vi').textContent = browser.i18n.getMessage('vi');
+  document.getElementById('id').textContent = browser.i18n.getMessage('id');
+  document.getElementById('th').textContent = browser.i18n.getMessage('th');
+  document.getElementById('de').textContent = browser.i18n.getMessage('de');
+  document.getElementById('ru').textContent = browser.i18n.getMessage('ru');
+  document.getElementById('es').textContent = browser.i18n.getMessage('es');
+  document.getElementById('it').textContent = browser.i18n.getMessage('it');
+  document.getElementById('fr').textContent = browser.i18n.getMessage('fr');
+
+  copyButton.textContent = browser.i18n.getMessage('copy');
 
   return container;
 }
@@ -379,23 +376,6 @@ async function sendDetect(targetLang, text) {
   })
 }
 
-// For loading html files
-function readFile(path, callback){
-  fetch(path, {mode:'same-origin'})
-  .then(function(res) {
-      return res.blob();
-  })
-  .then(function(blob) {
-      let reader = new FileReader();
-
-      reader.addEventListener("loadend", function() {
-          callback(this.result);
-      });
-
-      reader.readAsText(blob); 
-  });
-}
-
 function getPageXOffset() {
   return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
 }
@@ -403,3 +383,30 @@ function getPageXOffset() {
 function getPageYOffset() {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 }
+
+var contentHTML = `
+  <div class="papagoExt-flex-column" id="papagoExt-blur">
+    <div class="papagoExt-flex papago-draggable">
+      <select name="papagoExt-target" class="papagoExt-bordered" id="papagoExt-language-target">
+        <option id="en" value="en">English</option>
+        <option id="ko" value="ko">Korean</option>
+        <option id="ja" value="ja">Japanese</option>
+        <option id="zh-CN" value="zh-CN">Chinese (Simplified)</option>
+        <option id="zh-TW" value="zh-TW">Chinese (Traditional)</option>
+        <option id="vi" value="vi">Vietnamese</option>
+        <option id="id" value="id">Indonesian</option>
+        <option id="th" value="th">Thai</option>
+        <option id="de" value="de">German</option>
+        <option id="ru" value="ru">Russian</option>
+        <option id="es" value="es">Spanish</option>
+        <option id="it" value="it">Italian</option>
+        <option id="fr" value="fr">French</option>
+      </select>
+      <div class="papagoExt-bordered" id="papagoExt-copy-button">Copy</div>
+    </div>
+    <div class="papagoExt-bordered" id="papagoExt-result-text"></div>
+  </div>
+  <div id="papagoExt-loader">
+    <div id="papagoExt-loading-animation"></div>
+  </div>
+`;
