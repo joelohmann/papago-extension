@@ -54,5 +54,5 @@
         "contextMenus"
     ],
     "version": "1.0.0",
-    "web_accessible_resources": ["/icons/*", "/content/content.html"]
+    "web_accessible_resources": ["/icons/*"]
 }
