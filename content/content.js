@@ -384,7 +384,7 @@ function getPageYOffset() {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 }
 
-var contentHTML = `
+const contentHTML = `
   <div class="papagoExt-flex-column" id="papagoExt-blur">
     <div class="papagoExt-flex papago-draggable">
       <select name="papagoExt-target" class="papagoExt-bordered" id="papagoExt-language-target">
