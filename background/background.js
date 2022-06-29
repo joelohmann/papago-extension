@@ -1,3 +1,5 @@
+import { browser } from '../lib/browser-polyfill.min.js'
+
 const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
 const PAGE_LANGS = ['en', 'ko', 'ja', 'zh-CN', 'zh-TW'];
 
