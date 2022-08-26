@@ -1,9 +1,6 @@
-import { browser } from '../lib/browser-polyfill.min.js'
-
 const LANGS = ['en', 'ko', 'ja', 'zh', 'vi', 'id', 'th', 'de', 'ru', 'es', 'it', 'fr'];
 const PAGE_LANGS = ['en', 'ko', 'ja', 'zh-CN', 'zh-TW'];
 
-var browserLang;
 detectPreferredLanguage();
 
 browser.contextMenus.create({
@@ -55,10 +52,10 @@ function translate(request) {
 }
 
 function detectPreferredLanguage() {
-	browserLang = window.navigator.language.substring(0, 2);
+	let browserLang = browser.i18n.getUILanguage().substring(0, 2);
 
 	if (!LANGS.includes(browserLang)) {
-		browserLang = null;
+		browserLang = 'en';
 	}
 
 	browser.storage.local.set({
@@ -67,13 +64,18 @@ function detectPreferredLanguage() {
 }
 
 function translatePage(tab) {
-	let sourceLang = PAGE_LANGS.includes(browserLang) ? browserLang : 'ko';
-	let targetLang = sourceLang != 'en' ? 'en' : 'ko';
+	browser.storage.local.get({
+		browserLang: 'en'
+	})
+	.then(config => {
+		let sourceLang = PAGE_LANGS.includes(config.browserLang) ? config.browserLang : 'ko';
+		let targetLang = sourceLang != 'en' ? 'en' : 'ko';
 
-	let url = `https://papago.naver.net/website?locale=${browserLang}&source=${sourceLang}&target=${targetLang}&url=${encodeURIComponent(tab.url)}`;
-  
-	browser.tabs.create({
-		url: url,
-		index: tab.index + 1
+		let url = `https://papago.naver.net/website?locale=${config.browserLang}&source=${sourceLang}&target=${targetLang}&url=${encodeURIComponent(tab.url)}`;
+		
+		browser.tabs.create({
+			url: url,
+			index: tab.index + 1
+		})
 	})	
-  }
+}
