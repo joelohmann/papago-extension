@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="options.css">
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="options.js"></script>
+</head>
+<body>
+  <header>
+    <img src="../icons/logo.png" id="logo"></img>
+    <h1>Translating with Papago</h1>
+  </header>
+  <section>
+    <div class="options-section" id="default-options">
+      <h3 id="translation-defaults-title">Translation Defaults</h3>
+      <div class="flex">
+        <div class="radios">
+          <div class="option">
+            <input type="radio" name="translation-defaults" value="true" id="remember-last" checked>
+            <label for="remember-last" id="remember-last-label">Remember last search</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="translation-defaults" value="false" id="use-defaults">
+            <label for="use-defaults" id="use-defaults-label">Use default translation settings instead</label>
+          </div>
+        </div>
+        <div class="option" id="translation-options">
+          <label for="default-target" id="default-target-label">Default target language</label>
+          <select name="default-target">
+            <option id="en" value="en">English</option>
+            <option id="ko" value="ko">Korean</option>
+            <option id="ja" value="ja">Japanese</option>
+            <option id="zh-CN" value="zh-CN">Chinese (Simplified)</option>
+            <option id="zh-TW" value="zh-TW">Chinese (Traditional)</option>
+            <option id="vi" value="vi">Vietnamese</option>
+            <option id="id" value="id">Indonesian</option>
+            <option id="th" value="th">Thai</option>
+            <option id="de" value="de">German</option>
+            <option id="ru" value="ru">Russian</option>
+            <option id="es" value="es">Spanish</option>
+            <option id="it" value="it">Italian</option>
+            <option id="fr" value="fr">French</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="default-font" id="default-font-label">Default font</label>
+          <select name="default-font">
+            <option id="default" value="default">Default</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Sans-serif">Sans-Serif</option>
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier">Courier</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="default-theme" id="default-theme-label">Default theme</label>
+          <select name="default-theme">
+            <option id="auto" value="auto">Auto Detect</option>
+            <option id="light" value="light">Light</option>
+            <option id="dark" value="dark">Dark</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="options-section">
+      <h3 id="inline-options-title">Inline Translator Options</h3>
+      <div class="flex">
+        <div class="option">
+          <input type="checkbox" name="use-inline" checked>
+          <label for="use-inline" id="use-inline-label">Use inline translator</label>
+        </div> 
+        <div id="inline-options">
+          <div class="option">
+            <label for="phrase-select" id="phrase-select-label">Choose how to select text for translation</label>
+            <select name="phrase-select">
+              <option id="drag" value="drag">Drag</option>
+              <option id="ctrl-drag" value="ctrl-drag">Ctrl + Drag</option>
+              <option id="alt-drag" value="alt-drag">Alt + Drag</option>
+            </select>   
+          </div>
+          <div class="radios">
+            <div class="option">
+              <p id="inline-behavior-title">Inline Translator Behavior</p>
+              <input type="radio" name="inline-display" value="icon" id="inline-display-icon" checked>
+              <label for="inline-display-icon" id="inline-display-icon-label">Click on icon to show translation results</label>
+            </div>
+            <div class="option">
+              <input type="radio" name="inline-display" value="instant" id="inline-display-instant">
+              <label for="inline-display-instant" id="inline-display-instant-label">Display translation results immediately after selecting</label>
+            </div>
+          </div>
+        </div>       
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p id="footer">Changes will be applied after refreshing any open pages.</p>
+  </footer>
+</body>
+</html>

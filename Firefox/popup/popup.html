@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translating with Papago</title>
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="popup.css">
+    <!-- Scripts -->
+    <script src="../lib/browser-polyfill.min.js"></script>
+    <script src="popup.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container" id="blur">
+        <div class="flex" id="toolbar-top">
+            <select name="source" class="bordered" id="language-source">
+                <option id="source-auto" value="auto">Auto</option>
+                <option id="source-en" value="en">English</option>
+                <option id="source-ko" value="ko">Korean</option>
+                <option id="source-ja" value="ja">Japanese</option>
+                <option id="source-zh-CN" value="zh-CN">Chinese (Simplified)</option>
+                <option id="source-zh-TW" value="zh-TW">Chinese (Traditional)</option>
+                <option id="source-vi" value="vi">Vietnamese</option>
+                <option id="source-id" value="id">Indonesian</option>
+                <option id="source-th" value="th">Thai</option>
+                <option id="source-de" value="de">German</option>
+                <option id="source-ru" value="ru">Russian</option>
+                <option id="source-es" value="es">Spanish</option>
+                <option id="source-it" value="it">Italian</option>
+                <option id="source-fr" value="fr">French</option>
+            </select>
+            <button class="fa fa-exchange-alt bordered" id="swap-button"></button>
+            <select name="target" class="bordered" id="language-target">
+                <option id="target-en" value="en">English</option>
+                <option id="target-ko" value="ko">Korean</option>
+                <option id="target-ja" value="ja">Japanese</option>
+                <option id="target-zh-CN" value="zh-CN">Chinese (Simplified)</option>
+                <option id="target-zh-TW" value="zh-TW">Chinese (Traditional)</option>
+                <option id="target-vi" value="vi">Vietnamese</option>
+                <option id="target-id" value="id">Indonesian</option>
+                <option id="target-th" value="th">Thai</option>
+                <option id="target-de" value="de">German</option>
+                <option id="target-ru" value="ru">Russian</option>
+                <option id="target-es" value="es">Spanish</option>
+                <option id="target-it" value="it">Italian</option>
+                <option id="target-fr" value="fr">French</option>
+            </select>
+        </div>
+        <textarea class="bordered" id="input-text"></textarea>
+        <div class="flex" id="toolbar-middle">
+            <button class="bordered" id="clear-button">Clear</button>
+            <div class="flex" id="honorific">
+                <span style="font-size: 1em;" id="honorific-label">Honorific</span>
+                <div class="fa fa-toggle-on" id="honorific-button"></div>
+            </div>
+            <button class="bordered" id="translate-button">Translate</button>
+        </div>
+        <textarea readonly class="bordered" id="result-text"></textarea>
+        <div id="copy-section">
+            <button class="bordered" id="copy-button">Copy</button>
+        </div>
+        <div class="flex-even" id="links">
+            <a id="transPage">Translate this Page</a>
+            <a id="settings">Settings</a>
+            <a id="openNaver">Open in Papago</a>
+        </div>
+    </div> 
+    <div id="loader">
+        <div id="loading-animation"></div>
+    </div>
+</body>
+</html>

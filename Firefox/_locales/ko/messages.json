@@ -1,0 +1,181 @@
+{
+  "extName": {
+    "message": "파파고로 번역 확장 (Translating with Papago)"
+  },
+
+  "extDescription": {
+    "message": "네이버 파파고 번역 엔진을 활용한 확장입니다."
+  },
+
+	"auto": {
+		"message": "언어감지"
+	},
+
+  "en": {
+		"message": "영어"
+	},
+
+	"ko": {
+		"message": "한국어"
+	},
+
+	"ja": {
+		"message": "일본어"
+	},
+
+	"zh_cn": {
+		"message": "중국어 (간체)"
+	},
+
+	"zh_tw": {
+		"message": "중국어 (번체)"
+	},
+
+  "vi": {
+		"message": "베트남어"
+	},
+
+  "id": {
+		"message": "인도네시아어"
+	},
+
+  "th": {
+		"message": "태국어"
+	},
+
+  "de": {
+		"message": "독일어"
+	},
+
+  "ru": {
+		"message": "러시아어"
+	},
+
+  "es": {
+		"message": "스페인어"
+	},
+
+  "it": {
+		"message": "이탈리아어"
+	},
+
+	"fr": {
+		"message": "프강스어"
+	},
+
+	"detected": {
+		"message": "감지"
+	},
+
+	"clear": {
+		"message": "삭제"
+	},
+
+	"honorific": {
+		"message": "높임말"
+	},
+
+	"translate": {
+		"message": "번역하기"
+	},
+
+	"copy": {
+		"message": "복사하기"
+	},
+
+	"copied": {
+		"message": "복사되었습니다!"
+	},
+
+	"translate_this_page": {
+		"message": "이 사이트 번역"
+	},
+
+	"settings": {
+		"message": "설정"
+	},
+
+	"open_in_papago": {
+		"message": "파파고 번역기 열기"
+	},
+
+	"translation_defaults": {
+		"message": "변역 기본 옵션"
+	},
+
+	"remember_last": {
+		"message": "지난 번역을 기록합니다"
+	},
+
+	"use_default": {
+		"message": "대신 기본 번역 설정을 사용합니다"
+	},
+
+	"default_target": {
+		"message": "기본 목적 언어"
+	},
+
+	"default_font": {
+		"message": "기본 글꼴"
+	},
+
+	"default": {
+		"message": "기본"
+	},
+
+	"default_theme": {
+		"message": "기본 테마"
+	},
+
+	"auto_detect": {
+		"message": "자동감지"
+	},
+
+	"light": {
+		"message": "어두운 모드"
+	},
+
+	"dark": {
+		"message": "밝은 모드"
+	},
+
+	"inline_options": {
+		"message": "인라인 번역 옵션"
+	},
+
+	"use_inline": {
+		"message": "사용함"
+	},
+
+	"phrase_select": {
+		"message": "번역할 텍스트를 선택하는 방법을 선택합니다"
+	},
+
+	"drag": {
+		"message": "드래그"
+	},
+
+	"ctrl_drag": {
+		"message": "Ctrl 키 + 드래그"
+	},
+
+	"alt_drag": {
+		"message": "Alt 키 + 드래그"
+	},
+
+	"inline_behavior": {
+		"message": "인라인 번역 행동"
+	},
+
+	"inline_display_icon": {
+		"message": "벼역 결과를 표시하려면 아이콘을 클릭합니다"
+	},
+
+	"inline_display_instant": {
+		"message": "선택한 후 바로 번역 결과를 표시합니다"
+	},
+
+	"footer": {
+		"message": "기존 창을 새로고침 하면 새로운 설정은 적용됩니다"
+	}
+}

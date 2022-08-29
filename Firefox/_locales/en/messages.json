@@ -1,0 +1,181 @@
+{
+  "extName": {
+    "message": "Translating with Papago"
+  },
+
+  "extDescription": {
+    "message": "An extension that utilizes Naver's Papago translation engine."
+  },
+
+	"auto": {
+		"message": "Auto"
+	},
+
+  "en": {
+		"message": "English"
+	},
+
+	"ko": {
+		"message": "Korean"
+	},
+
+	"ja": {
+		"message": "Japanese"
+	},
+
+	"zh_cn": {
+		"message": "Chinese (Simplified)"
+	},
+
+	"zh_tw": {
+		"message": "Chinese (Traditional)"
+	},
+
+  "vi": {
+		"message": "Vietnamese"
+	},
+
+  "id": {
+		"message": "Indonesian"
+	},
+
+  "th": {
+		"message": "Thai"
+	},
+
+  "de": {
+		"message": "German"
+	},
+
+  "ru": {
+		"message": "Russian"
+	},
+
+  "es": {
+		"message": "Spanish"
+	},
+
+  "it": {
+		"message": "Italian"
+	},
+
+	"fr": {
+		"message": "French"
+	},
+
+	"detected": {
+		"message": "Detected"
+	},
+
+	"clear": {
+		"message": "Clear"
+	},
+
+	"honorific": {
+		"message": "Honorific"
+	},
+
+	"translate": {
+		"message": "Translate"
+	},
+
+	"copy": {
+		"message": "Copy"
+	},
+
+	"copied": {
+		"message": "Copied!"
+	},
+
+	"translate_this_page": {
+		"message": "Translate this Page"
+	},
+
+	"settings": {
+		"message": "Settings"
+	},
+
+	"open_in_papago": {
+		"message": "Open in Papago"
+	},
+
+	"translation_defaults": {
+		"message": "Translation Defaults"
+	},
+
+	"remember_last": {
+		"message": "Remember last search"
+	},
+
+	"use_default": {
+		"message": "Use default translation settings instead"
+	},
+
+	"default_target": {
+		"message": "Default target language"
+	},
+
+	"default_font": {
+		"message": "Default font"
+	},
+
+	"default": {
+		"message": "Default"
+	},
+
+	"default_theme": {
+		"message": "Default theme"
+	},
+
+	"auto_detect": {
+		"message": "Auto Detect"
+	},
+
+	"light": {
+		"message": "Light"
+	},
+
+	"dark": {
+		"message": "Dark"
+	},
+
+	"inline_options": {
+		"message": "Inline Translator Options"
+	},
+
+	"use_inline": {
+		"message": "Use inline translator"
+	},
+
+	"phrase_select": {
+		"message": "Choose how to select text for translation"
+	},
+
+	"drag": {
+		"message": "Drag"
+	},
+
+	"ctrl_drag": {
+		"message": "Ctrl + Drag"
+	},
+
+	"alt_drag": {
+		"message": "Alt + Drag"
+	},
+
+	"inline_behavior": {
+		"message": "Inline Translator Behavior"
+	},
+
+	"inline_display_icon": {
+		"message": "Click on icon to show translation results"
+	},
+
+	"inline_display_instant": {
+		"message": "Display translation results immediately after selecting"
+	},
+
+	"footer": {
+		"message": "Changes will be applied after refreshing any open pages"
+	}
+}

@@ -1,0 +1,181 @@
+{
+  "extName": {
+    "message": "Translating with Papago"
+  },
+
+  "extDescription": {
+    "message": "Una extensión que utiliza el motor de traducción Papago de Naver."
+  },
+
+	"auto": {
+		"message": "Auto"
+	},
+
+  "en": {
+		"message": "Inglés"
+	},
+
+	"ko": {
+		"message": "Coréano"
+	},
+
+	"ja": {
+		"message": "Japonés"
+	},
+
+	"zh_cn": {
+		"message": "Chino (Simplicidad)"
+	},
+
+	"zh_tw": {
+		"message": "Chino (Tradicional)"
+	},
+
+  "vi": {
+		"message": "Vietnamita"
+	},
+
+  "id": {
+		"message": "Indonesia"
+	},
+
+  "th": {
+		"message": "Tailandés"
+	},
+
+  "de": {
+		"message": "Alemán"
+	},
+
+  "ru": {
+		"message": "Ruso"
+	},
+
+  "es": {
+		"message": "Español"
+	},
+
+  "it": {
+		"message": "Italiano"
+	},
+
+	"fr": {
+		"message": "Francés"
+	},
+
+	"detected": {
+		"message": "Detectado"
+	},
+
+	"clear": {
+		"message": "Despejar"
+	},
+
+	"honorific": {
+		"message": "Honorifico"
+	},
+
+	"translate": {
+		"message": "Traducir"
+	},
+
+	"copy": {
+		"message": "Copiar"
+	},
+
+	"copied": {
+		"message": "Copiado!"
+	},
+
+	"translate_this_page": {
+		"message": "Traduce esta Página"
+	},
+
+	"settings": {
+		"message": "Configuración"
+	},
+
+	"open_in_papago": {
+		"message": "Abrir en Papago"
+	},
+
+	"translation_defaults": {
+		"message": "Valores Predeterminados de Traducción"
+	},
+
+	"remember_last": {
+		"message": "Recuerda última búsqueda"
+	},
+
+	"use_default": {
+		"message": "Utilice la configuración predeterminada de traducción en su lugar"
+	},
+
+	"default_target": {
+		"message": "Idioma predeterminada de destino"
+	},
+
+	"default_font": {
+		"message": "Fuente predeterminada"
+	},
+
+	"default": {
+		"message": "Defecto"
+	},
+
+	"default_theme": {
+		"message": "Tema predeterminado"
+	},
+
+	"auto_detect": {
+		"message": "Detectar automente"
+	},
+
+	"light": {
+		"message": "Luz"
+	},
+
+	"dark": {
+		"message": "Noche"
+	},
+
+	"inline_options": {
+		"message": "Opciones de Traductor Emergente"
+	},
+
+	"use_inline": {
+		"message": "Usar la traductor emergente"
+	},
+
+	"phrase_select": {
+		"message": "Elegir cómo seleccionar texto para traducir"
+	},
+
+	"drag": {
+		"message": "Arrastrar"
+	},
+
+	"ctrl_drag": {
+		"message": "Ctrl + Arrastrar"
+	},
+
+	"alt_drag": {
+		"message": "Alt + Arrastrar"
+	},
+
+	"inline_behavior": {
+		"message": "Funcionamiento de Traductor Emergente"
+	},
+
+	"inline_display_icon": {
+		"message": "Hacer clic en icono para monstrar los resultados de la traducción"
+	},
+
+	"inline_display_instant": {
+		"message": "Mostrar resultados de traducción inmediatamente después de seleccionar"
+	},
+
+	"footer": {
+		"message": "Los cambios se aplicarán después de actualizar las páginas abiertas"
+	}
+}
