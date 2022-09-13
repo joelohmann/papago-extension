@@ -202,7 +202,7 @@ function translateText(event) {
 
     sendDetect(target.value, text.value.trim(), honorific)
       .then(response => {
-        if (!response.message) throw new Error(response);
+        if (response.error) throw new Error(response.message);
 
         source.options[source.selectedIndex].textContent = `${browser.i18n.getMessage('detected')} - ${browser.i18n.getMessage(response.message.result.srcLangType.replace('-', '_'))}`;
         source.detectedLang = response.message.result.srcLangType;
@@ -229,7 +229,7 @@ function translateText(event) {
 
     sendTranslate(source.value, target.value, text.value.trim(), honorific)
       .then(response => {
-        if (!response.message) throw new Error(response);
+        if (response.error) throw new Error(response.message);
 
         result.value = response.message.result.translatedText;
 
