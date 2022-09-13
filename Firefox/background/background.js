@@ -34,13 +34,17 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function call(url) {
-	try {
-		let response = await fetch(url);
+	let response = await fetch(url);
 
-		return await response.json();
-	} catch (err) {
-		throw err;
+	if (!response.ok) {
+		let error = {
+			message: "Sorry, there was an error.",
+			error: true
+		}
+		return error;
 	}
+
+	return await response.json();
 }
 
 function detect(request) {
