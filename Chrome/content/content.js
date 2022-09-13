@@ -301,7 +301,7 @@ function setResult() {
   // Check if source languange is known already
   if (selectedLang) {
     if (selectedLang === target.value) {
-      return result.textContent = selectedText;
+      if (response.error) throw new Error(response.message);
     }
 
     loading(true);
@@ -324,7 +324,7 @@ function setResult() {
 
     sendDetect(target.value, selectedText)
     .then(response => {
-      if (!response.message) throw new Error(response);
+      if (response.error) throw new Error(response.message);
 
       result.textContent = response.message.result.translatedText;
       selectedLang = response.message.result.srcLangType;

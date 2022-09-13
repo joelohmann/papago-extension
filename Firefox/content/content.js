@@ -308,7 +308,7 @@ function setResult() {
 
     sendTranslate(selectedLang, target.value, selectedText)
     .then(response => {
-      if (!response.message) throw new Error(response);
+      if (response.error) throw new Error(response.message);
   
       result.textContent = response.message.result.translatedText;
   
@@ -324,7 +324,7 @@ function setResult() {
 
     sendDetect(target.value, selectedText)
     .then(response => {
-      if (!response.message) throw new Error(response);
+      if (response.error) throw new Error(response.message);
 
       result.textContent = response.message.result.translatedText;
       selectedLang = response.message.result.srcLangType;
