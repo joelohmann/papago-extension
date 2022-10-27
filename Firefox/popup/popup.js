@@ -197,6 +197,9 @@ function translateText(event) {
   let source = document.getElementById('language-source');
   let target = document.getElementById('language-target');
   let result = document.getElementById('result-text');
+
+  if (text.value.trim().length > 500) return result.value = browser.i18n.getMessage('max_translation_size');
+
   if (source.value == 'auto') {
     loading(true);
 
