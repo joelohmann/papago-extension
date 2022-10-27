@@ -99,7 +99,7 @@ function mouseUp(event) {
     let tempSelection = window.getSelection();
     let tempText = tempSelection.toString();
 
-    if (tempText.length > 0 && !SELECTION_CHECK.test(tempText)) {
+    if (tempText.length > 0 && tempText.length < 500 && !SELECTION_CHECK.test(tempText)) {
       if (phraseSelect === 'drag' || keyPressed) {
         if (dragging) {
           // Selection check passed: store selection
