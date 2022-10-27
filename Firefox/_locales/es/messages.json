@@ -99,6 +99,10 @@
 		"message": "Abrir en Papago"
 	},
 
+	"max_translation_size" : {
+		"message": "Se admiten traducciones de hasta 500 caracteres."
+	},
+
 	"translation_defaults": {
 		"message": "Valores Predeterminados de Traducción"
 	},

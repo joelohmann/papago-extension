@@ -99,6 +99,10 @@
 		"message": "파파고 번역기 열기"
 	},
 
+	"max_translation_size" : {
+		"message": "번역은 최대 500자까지 지원됩니다."
+	},
+
 	"translation_defaults": {
 		"message": "변역 기본 옵션"
 	},
