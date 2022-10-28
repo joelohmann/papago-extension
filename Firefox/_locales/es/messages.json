@@ -99,6 +99,10 @@
 		"message": "Abrir en Papago"
 	},
 
+	"donate": {
+		"message": "Apoyar Esta Extensión"
+	},
+
 	"max_translation_size" : {
 		"message": "Se admiten traducciones de hasta 500 caracteres."
 	},
