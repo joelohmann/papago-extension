@@ -194,21 +194,22 @@ function createInline() {
   }
 
   // Locales
-  document.getElementById('en').textContent = browser.i18n.getMessage('en');
-  document.getElementById('ko').textContent = browser.i18n.getMessage('ko');
-  document.getElementById('ja').textContent = browser.i18n.getMessage('ja');
-  document.getElementById('zh-CN').textContent = browser.i18n.getMessage('zh_CN');
-  document.getElementById('zh-TW').textContent = browser.i18n.getMessage('zh_TW');
-  document.getElementById('vi').textContent = browser.i18n.getMessage('vi');
-  document.getElementById('id').textContent = browser.i18n.getMessage('id');
-  document.getElementById('th').textContent = browser.i18n.getMessage('th');
-  document.getElementById('de').textContent = browser.i18n.getMessage('de');
-  document.getElementById('ru').textContent = browser.i18n.getMessage('ru');
-  document.getElementById('es').textContent = browser.i18n.getMessage('es');
-  document.getElementById('it').textContent = browser.i18n.getMessage('it');
-  document.getElementById('fr').textContent = browser.i18n.getMessage('fr');
+  document.getElementById('papagoExt-en').textContent = browser.i18n.getMessage('en');
+  document.getElementById('papagoExt-ko').textContent = browser.i18n.getMessage('ko');
+  document.getElementById('papagoExt-ja').textContent = browser.i18n.getMessage('ja');
+  document.getElementById('papagoExt-zh-CN').textContent = browser.i18n.getMessage('zh_CN');
+  document.getElementById('papagoExt-zh-TW').textContent = browser.i18n.getMessage('zh_TW');
+  document.getElementById('papagoExt-vi').textContent = browser.i18n.getMessage('vi');
+  document.getElementById('papagoExt-id').textContent = browser.i18n.getMessage('id');
+  document.getElementById('papagoExt-th').textContent = browser.i18n.getMessage('th');
+  document.getElementById('papagoExt-de').textContent = browser.i18n.getMessage('de');
+  document.getElementById('papagoExt-ru').textContent = browser.i18n.getMessage('ru');
+  document.getElementById('papagoExt-es').textContent = browser.i18n.getMessage('es');
+  document.getElementById('papagoExt-it').textContent = browser.i18n.getMessage('it');
+  document.getElementById('papagoExt-fr').textContent = browser.i18n.getMessage('fr');
 
   copyButton.textContent = browser.i18n.getMessage('copy');
+  document.getElementById('papagoExt-donate').textContent = browser.i18n.getMessage('donate');
 
   return container;
 }
@@ -355,8 +356,6 @@ function copied(copyButton) {
   div.style.right = copyButton.offsetWidth + 15 + 'px';
   div.style.top = copyButton.offsetTop + 5 + 'px';
 
-  console.log(copyButton);
-
   copyButton.parentElement.insertBefore(div, copyButton);
   setTimeout(() => div.remove(), 1900);
 }
@@ -388,23 +387,26 @@ const contentHTML = `
   <div class="papagoExt-flex-column" id="papagoExt-blur">
     <div class="papagoExt-flex papago-draggable">
       <select name="papagoExt-target" class="papagoExt-bordered" id="papagoExt-language-target">
-        <option id="en" value="en">English</option>
-        <option id="ko" value="ko">Korean</option>
-        <option id="ja" value="ja">Japanese</option>
-        <option id="zh-CN" value="zh-CN">Chinese (Simplified)</option>
-        <option id="zh-TW" value="zh-TW">Chinese (Traditional)</option>
-        <option id="vi" value="vi">Vietnamese</option>
-        <option id="id" value="id">Indonesian</option>
-        <option id="th" value="th">Thai</option>
-        <option id="de" value="de">German</option>
-        <option id="ru" value="ru">Russian</option>
-        <option id="es" value="es">Spanish</option>
-        <option id="it" value="it">Italian</option>
-        <option id="fr" value="fr">French</option>
+        <option id="papagoExt-en" value="en">English</option>
+        <option id="papagoExt-ko" value="ko">Korean</option>
+        <option id="papagoExt-ja" value="ja">Japanese</option>
+        <option id="papagoExt-zh-CN" value="zh-CN">Chinese (Simplified)</option>
+        <option id="papagoExt-zh-TW" value="zh-TW">Chinese (Traditional)</option>
+        <option id="papagoExt-vi" value="vi">Vietnamese</option>
+        <option id="papagoExt-id" value="id">Indonesian</option>
+        <option id="papagoExt-th" value="th">Thai</option>
+        <option id="papagoExt-de" value="de">German</option>
+        <option id="papagoExt-ru" value="ru">Russian</option>
+        <option id="papagoExt-es" value="es">Spanish</option>
+        <option id="papagoExt-it" value="it">Italian</option>
+        <option id="papagoExt-fr" value="fr">French</option>
       </select>
       <div class="papagoExt-bordered" id="papagoExt-copy-button">Copy</div>
     </div>
     <div class="papagoExt-bordered" id="papagoExt-result-text"></div>
+    <div class="papagoExt-flex" id="papagoExt-links">
+      <a href="https://www.patreon.com/translating_with_papago" id="papagoExt-donate">Support This Extension</a>
+    </div>
   </div>
   <div id="papagoExt-loader">
     <div id="papagoExt-loading-animation"></div>

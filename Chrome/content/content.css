@@ -95,6 +95,22 @@
   overflow-y: scroll !important; 
 }
 
+#papagoExt-links {
+  justify-content: center !important;
+  margin: 5px 0 !important;
+}
+
+#papagoExt-donate {
+  color: #5892e4 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: color 0.25s !important;
+}
+
+#papagoExt-donate:hover {
+  color: #4472b3 !important;
+}
+
 #papagoExt-loader {
   position: absolute !important;
   top: 0 !important;
