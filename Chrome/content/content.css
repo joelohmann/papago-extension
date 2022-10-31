@@ -92,7 +92,7 @@
   margin: 0 !important;
   padding: 5px !important;
   flex-grow: 3 !important;
-  overflow-y: scroll !important; 
+  overflow-y: auto !important; 
 }
 
 #papagoExt-links {
