@@ -405,7 +405,7 @@ const contentHTML = `
     </div>
     <div class="papagoExt-bordered" id="papagoExt-result-text"></div>
     <div class="papagoExt-flex" id="papagoExt-links">
-      <a href="https://www.patreon.com/translating_with_papago" id="papagoExt-donate">Support This Extension</a>
+      <span onclick="window.open('https://www.patreon.com/translating_with_papago', '_blank')" id="papagoExt-donate">Support This Extension</span>
     </div>
   </div>
   <div id="papagoExt-loader">
