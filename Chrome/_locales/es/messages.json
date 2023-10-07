@@ -104,7 +104,7 @@
 	},
 
 	"max_translation_size" : {
-		"message": "Se admiten traducciones de hasta 500 caracteres."
+		"message": "Se admiten traducciones de hasta 200 caracteres."
 	},
 
 	"translation_defaults": {

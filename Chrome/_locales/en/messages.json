@@ -104,7 +104,7 @@
 	},
 
 	"max_translation_size" : {
-		"message": "Translations are supported up to 500 characters."
+		"message": "Translations are supported up to 200 characters."
 	},
 
 	"translation_defaults": {
