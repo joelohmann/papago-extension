@@ -50,11 +50,11 @@ async function call(url) {
 }
 
 function detect(request) {
-	return call("https://papago-extension.herokuapp.com/api/v1/detect?" + request.query);
+	return call("http://papago.hopto.org/api/v1/detect?" + request.query);
 }
 
 function translate(request) {
-	return call("https://papago-extension.herokuapp.com/api/v1/translate?" + request.query)
+	return call("http://papago.hopto.org/api/v1/translate?" + request.query)
 }
 
 function detectPreferredLanguage() {
