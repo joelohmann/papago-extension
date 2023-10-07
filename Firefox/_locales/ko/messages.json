@@ -104,7 +104,7 @@
 	},
 
 	"max_translation_size" : {
-		"message": "번역은 최대 500자까지 지원됩니다."
+		"message": "번역은 최대 200자까지 지원됩니다."
 	},
 
 	"translation_defaults": {
@@ -176,7 +176,7 @@
 	},
 
 	"inline_display_icon": {
-		"message": "벼역 결과를 표시하려면 아이콘을 클릭합니다"
+		"message": "번역 결과를 표시하려면 아이콘을 클릭합니다"
 	},
 
 	"inline_display_instant": {
