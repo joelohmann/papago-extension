@@ -49,11 +49,11 @@
         "browser_style": false
     },
     "permissions": [
-        "https://papago-extension.herokuapp.com/api/v1/*",
+        "http://papago.hopto.org/api/v1/*",
         "storage", 
         "tabs",
         "contextMenus"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "web_accessible_resources": ["/icons/*"]
 }
